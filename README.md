@@ -62,6 +62,9 @@ public/                    # robots.txt, favicon.svg, og-default.svg
 - **Guías pilares**: formar LLC no residente, EIN sin SSN, ITIN, Formulario 5472, banca.
 - **Hubs de categoría** (silos SEO): impuestos, banca, herramientas.
 - **Páginas E-E-A-T**: sobre nosotros, metodología, divulgación, contacto, privacidad, términos.
+- **Comparativas directas** (`/comparativas`): estado vs estado (Wyoming vs Nuevo México, Florida vs
+  Wyoming, etc.) generadas desde `states.js`, y servicio vs servicio (doola vs Globalfy, doola vs
+  Bizee) desde `comparisons.js`. Alta intención de búsqueda.
 
 ## Desarrollo
 

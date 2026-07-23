@@ -25,6 +25,7 @@ export const NAV = [
   { label: 'Crear LLC por Estado', href: '/estados' },
   { label: 'EIN, ITIN & Impuestos', href: '/impuestos' },
   { label: 'Cuentas Bancarias', href: '/banca' },
+  { label: 'Comparativas', href: '/comparativas' },
   { label: 'Herramientas', href: '/herramientas' },
 ];
 
@@ -287,7 +288,7 @@ export const FOOTER_COLS = [
       { label: 'Sacar el EIN sin SSN', href: '/impuestos/ein-sin-ssn' },
       { label: 'Solicitar el ITIN', href: '/impuestos/itin' },
       { label: 'Formulario 5472', href: '/impuestos/formulario-5472' },
-      { label: 'Cuentas bancarias', href: '/banca' },
+      { label: 'Comparativas', href: '/comparativas' },
     ],
   },
   {

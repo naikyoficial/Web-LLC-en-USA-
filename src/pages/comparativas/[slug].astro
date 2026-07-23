@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleShell from '../../components/ArticleShell.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import FaqInline from '../../components/FaqInline.astro';
+import { SITE } from '../../data/site.js';
+import { STATES_DATA, firstYearCost, money } from '../../data/states.js';
+import { STATE_MATCHUPS } from '../../data/comparisons.js';
+import { articleSchema, breadcrumbSchema, faqSchema } from '../../data/seo.js';
+
+export function getStaticPaths() {
+  return STATE_MATCHUPS.map((m) => ({ params: { slug: m.slug }, props: { m } }));
+}
+
+const { m } = Astro.props;
+const a = { slug: m.a, ...STATES_DATA[m.a] };
+const b = { slug: m.b, ...STATES_DATA[m.b] };
+
+// --- Lógica de recomendación derivada de los datos ---
+const cheaper = firstYearCost(a) <= firstYearCost(b) ? a : b;
+const morePrivate = ({ alta: 3, media: 2, baja: 1 })[a.privacy] >= ({ alta: 3, media: 2, baja: 1 })[b.privacy] ? a : b;
+const winner = a.score >= b.score ? a : b;
+const loser = winner.slug === a.slug ? b : a;
+
+// Razones para elegir cada estado
+function reasonsFor(x, other) {
+  const r = [];
+  if (firstYearCost(x) < firstYearCost(other)) r.push(`Es más barato el primer año (${money(firstYearCost(x))} vs ${money(firstYearCost(other))}).`);
+  if (({ alta: 3, media: 2, baja: 1 })[x.privacy] > ({ alta: 3, media: 2, baja: 1 })[other.privacy]) r.push(`Ofrece mayor privacidad (${x.privacy}) que ${other.name} (${other.privacy}).`);
+  if (!x.incomeTax && other.incomeTax) r.push('No cobra impuesto estatal sobre la renta personal.');
+  if (x.annualFreq === 'ninguno' && other.annualFreq !== 'ninguno') r.push('No exige reporte anual: menos mantenimiento.');
+  if (x.slug === 'delaware') r.push('Es el estándar que esperan los fondos de inversión (VC) si vas a levantar capital.');
+  if (x.slug === 'florida') r.push('Tiene una gran comunidad hispana de negocios y conviene si operás físicamente en EE. UU.');
+  if (x.slug === 'texas') r.push('Es un mercado enorme y sin impuesto a la renta, ideal si vas a tener presencia allí.');
+  if (x.note) r.push(x.note);
+  return r.length ? r : [`Es una opción sólida si tenés vínculos concretos con ${x.name}.`];
+}
+const reasonsA = reasonsFor(a, b);
+const reasonsB = reasonsFor(b, a);
+
+const meta = {
+  title: `LLC en ${a.name} vs ${b.name}: ¿cuál conviene? (2026)`,
+  description: `Comparativa 2026 de ${a.name} vs ${b.name} para abrir tu LLC como no residente: costos, privacidad, impuestos y cuál elegir según tu caso.`,
+  updated: 'julio 2026', published: '2026-07-01',
+};
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+
+const faqs = [
+  { q: `¿Es más barato abrir una LLC en ${a.name} o en ${b.name}?`, a: `El primer año, ${cheaper.name} es más económico: ${money(firstYearCost(cheaper))} frente a ${money(firstYearCost(cheaper.slug === a.slug ? b : a))} (registro + primer reporte, sin contar el agente registrado).` },
+  { q: `¿Cuál ofrece más privacidad, ${a.name} o ${b.name}?`, a: `${morePrivate.name} ofrece mayor privacidad del propietario (nivel ${morePrivate.privacy}). Es un factor importante si no querés que tu nombre aparezca en registros públicos consultables.` },
+  { q: `Para un no residente con negocio online, ¿cuál conviene?`, a: `En la mayoría de los casos de negocio 100% digital sin presencia física, ${winner.name} suele ser la mejor opción de las dos por su combinación de costo, privacidad e impuestos. Aun así, la elección final depende de tu situación concreta.` },
+];
+const toc = [
+  { id: 'tabla', label: 'Comparativa lado a lado' },
+  { id: 'diferencias', label: 'Diferencias clave' },
+  { id: 'elegir-a', label: `Cuándo elegir ${a.name}` },
+  { id: 'elegir-b', label: `Cuándo elegir ${b.name}` },
+  { id: 'veredicto', label: 'Veredicto' },
+  { id: 'faq', label: 'Preguntas frecuentes' },
+];
+const sources = [
+  { label: `${a.sosName}`, href: a.sos },
+  { label: `${b.sosName}`, href: b.sos },
+  { label: 'IRS — Formulario SS-4 (EIN)', href: 'https://www.irs.gov/es/forms-pubs/about-form-ss-4' },
+];
+const schemas = [
+  articleSchema({ ...meta, canonical }),
+  breadcrumbSchema([
+    { name: 'Inicio', url: SITE.url },
+    { name: 'Comparativas', url: `${SITE.url}/comparativas` },
+    { name: `${a.name} vs ${b.name}`, url: canonical },
+  ]),
+  faqSchema(faqs),
+];
+---
+<BaseLayout title={meta.title} description={meta.description} type="article" publishedTime={meta.published} modifiedTime={meta.published} jsonld={schemas}>
+  <Header />
+  <main id="contenido">
+    <ArticleShell title={`LLC en ${a.name} vs ${b.name}`} category="Comparativas" readTime="9 min de lectura" updated={meta.updated} toc={toc} sources={sources}>
+      <p>{m.angle} En esta comparativa ponemos <strong>{a.name}</strong> y <strong>{b.name}</strong> lado a lado con datos verificados a 2026, para que un <strong>no residente</strong> decida con criterio y no por lo que le conviene vender a una agencia.</p>
+
+      <h2 id="tabla">{a.name} vs {b.name}: comparativa lado a lado</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Criterio</th><th>{a.name}</th><th>{b.name}</th></tr></thead>
+          <tbody>
+            <tr><th>Registro (una vez)</th><td>{money(a.filing)}</td><td>{money(b.filing)}</td></tr>
+            <tr><th>Reporte anual</th><td>{a.annualFreq === 'ninguno' ? '—' : `${money(a.annual)} (${a.annualFreq})`}</td><td>{b.annualFreq === 'ninguno' ? '—' : `${money(b.annual)} (${b.annualFreq})`}</td></tr>
+            <tr><th>Costo primer año*</th><td><strong>{money(firstYearCost(a))}</strong></td><td><strong>{money(firstYearCost(b))}</strong></td></tr>
+            <tr><th>Impuesto a la renta</th><td>{a.incomeTax ? 'Sí' : 'No'}</td><td>{b.incomeTax ? 'Sí' : 'No'}</td></tr>
+            <tr><th>Privacidad</th><td style="text-transform:capitalize">{a.privacy}</td><td style="text-transform:capitalize">{b.privacy}</td></tr>
+            <tr><th>¿Exige publicación?</th><td>{a.publication ? 'Sí' : 'No'}</td><td>{b.publication ? 'Sí' : 'No'}</td></tr>
+            <tr><th>Procesamiento</th><td>{a.processing}</td><td>{b.processing}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:14px;color:var(--text-3)">*Registro + primer reporte. No incluye el agente registrado (~$100-$150/año).</p>
+
+      <AdSlot label="Publicidad Patrocinada · In-Article" height="120px" />
+
+      <h2 id="diferencias">Diferencias clave</h2>
+      <ul>
+        <li><strong>Costo:</strong> {cheaper.name} sale más barato el primer año ({money(firstYearCost(cheaper))} vs {money(firstYearCost(cheaper.slug === a.slug ? b : a))}).</li>
+        <li><strong>Privacidad:</strong> {morePrivate.name} protege mejor los datos del propietario (nivel {morePrivate.privacy}).</li>
+        <li><strong>Impuestos:</strong> {a.incomeTax === b.incomeTax ? (a.incomeTax ? 'ambos cobran impuesto estatal a la renta.' : 'ninguno cobra impuesto estatal sobre la renta personal.') : `${!a.incomeTax ? a.name : b.name} no cobra impuesto estatal a la renta, mientras que ${a.incomeTax ? a.name : b.name} sí.`}</li>
+      </ul>
+
+      <h2 id="elegir-a">Cuándo elegir {a.name}</h2>
+      <ul>{reasonsA.map((r) => <li>{r}</li>)}</ul>
+      <p>Ver la <a href={`/estados/${a.slug}`}>guía completa de LLC en {a.name}</a>.</p>
+
+      <h2 id="elegir-b">Cuándo elegir {b.name}</h2>
+      <ul>{reasonsB.map((r) => <li>{r}</li>)}</ul>
+      <p>Ver la <a href={`/estados/${b.slug}`}>guía completa de LLC en {b.name}</a>.</p>
+
+      <h2 id="veredicto">Veredicto</h2>
+      <div class="callout callout--info">
+        <span class="callout__icon" aria-hidden="true">✓</span>
+        <p>Para el perfil típico de un <strong>no residente con negocio digital</strong>, <strong>{winner.name}</strong> suele ser la mejor de las dos opciones. Elegí <strong>{loser.name}</strong> solo si tenés un motivo concreto: {loser.slug === 'delaware' ? 'vas a buscar inversión de fondos.' : (loser.slug === 'florida' ? 'vas a operar físicamente en EE. UU. o querés cercanía con la comunidad hispana.' : (loser.slug === 'texas' ? 'vas a tener presencia o mercado en Texas.' : 'tenés vínculos o clientes en ese estado.'))}</p>
+      </div>
+      <p>¿Seguís con dudas? Hacé el <a href="/#quiz">diagnóstico en 3 pasos</a> o revisá la <a href="/estados">tabla comparativa de los 50 estados</a>.</p>
+
+      <FaqInline faqs={faqs} heading={`Preguntas frecuentes: ${a.name} vs ${b.name}`} />
+    </ArticleShell>
+  </main>
+  <Footer />
+</BaseLayout>
