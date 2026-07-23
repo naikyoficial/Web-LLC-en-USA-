@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StaticPage from '../components/StaticPage.astro';
+import { SITE } from '../data/site.js';
+import { breadcrumbSchema } from '../data/seo.js';
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const meta = { title: 'Divulgación de afiliados', description: 'Cómo funcionan los enlaces de afiliado en EmprendeUS y nuestro compromiso de transparencia.' };
+---
+<BaseLayout title={meta.title} description={meta.description} jsonld={[breadcrumbSchema([{ name: 'Inicio', url: SITE.url }, { name: 'Divulgación de afiliados', url: canonical }])]}>
+  <Header />
+  <main id="contenido">
+    <StaticPage title="Divulgación de afiliados" subtitle="Transparencia total sobre cómo ganamos dinero." updated={SITE.updatedLabel}>
+      <h2>Qué son los enlaces de afiliado</h2>
+      <p>
+        Algunos enlaces de EmprendeUS son <strong>enlaces de afiliado</strong>. Si hacés clic y contratás un
+        servicio (por ejemplo, un proveedor de formación de LLC o una cuenta bancaria), podemos recibir una
+        <strong>comisión sin costo adicional para ti</strong>: pagás lo mismo que si llegaras directo.
+      </p>
+
+      <h2>Nuestro compromiso</h2>
+      <ul>
+        <li>Las comisiones <strong>no influyen</strong> en el orden ni en la puntuación de nuestras comparativas.</li>
+        <li>Mostramos <strong>ventajas y desventajas</strong> reales de cada servicio, no solo lo positivo.</li>
+        <li>Recomendamos según lo que creemos mejor para cada caso, siguiendo nuestra <a href="/metodologia">metodología editorial</a>.</li>
+        <li>Marcamos los enlaces patrocinados con los atributos técnicos correspondientes.</li>
+      </ul>
+
+      <h2>Publicidad</h2>
+      <p>
+        Además de afiliados, el sitio puede mostrar <strong>espacios publicitarios</strong>. Los anuncios se
+        identifican como tales y son independientes de nuestro contenido editorial.
+      </p>
+
+      <h2>Por qué te lo contamos</h2>
+      <p>
+        Porque la confianza es lo único que sostiene a un portal como este. Preferimos ser transparentes
+        sobre cómo nos financiamos y que decidas con toda la información sobre la mesa.
+      </p>
+    </StaticPage>
+  </main>
+  <Footer />
+</BaseLayout>

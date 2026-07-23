@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StaticPage from '../components/StaticPage.astro';
+import { SITE } from '../data/site.js';
+import { breadcrumbSchema } from '../data/seo.js';
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const meta = { title: 'Términos y condiciones', description: 'Términos de uso del portal EmprendeUS: naturaleza informativa del contenido y limitación de responsabilidad.' };
+---
+<BaseLayout title={meta.title} description={meta.description} jsonld={[breadcrumbSchema([{ name: 'Inicio', url: SITE.url }, { name: 'Términos', url: canonical }])]}>
+  <Header />
+  <main id="contenido">
+    <StaticPage title="Términos y condiciones" subtitle="Plantilla base — adaptala con tu asesor legal antes de publicar." updated={SITE.updatedLabel}>
+      <h2>Naturaleza del contenido</h2>
+      <p>
+        Todo el contenido de EmprendeUS tiene <strong>fines exclusivamente educativos e informativos</strong>.
+        No constituye asesoría legal, fiscal, contable ni financiera, y no crea una relación profesional-cliente.
+        No somos un despacho de abogados, contadores públicos ni un agente registrado.
+      </p>
+
+      <h2>Exactitud y actualización</h2>
+      <p>
+        Nos esforzamos por mantener la información precisa y actualizada, pero las leyes, tarifas y reglas del
+        IRS y de los estados cambian. La información se ofrece <strong>«tal cual»</strong>, sin garantías.
+        Verificá siempre en las fuentes oficiales enlazadas antes de actuar.
+      </p>
+
+      <h2>Enlaces de terceros y afiliados</h2>
+      <p>
+        El sitio incluye enlaces a servicios de terceros, algunos de afiliado (ver
+        <a href="/divulgacion">divulgación</a>). No controlamos ni respondemos por el contenido, los precios
+        o las prácticas de esos terceros.
+      </p>
+
+      <h2>Limitación de responsabilidad</h2>
+      <p>
+        En la máxima medida permitida por la ley, EmprendeUS no será responsable por decisiones tomadas con
+        base en el contenido del sitio. La responsabilidad de tus decisiones empresariales y fiscales es tuya
+        y de los profesionales que contrates.
+      </p>
+
+      <h2>Propiedad intelectual</h2>
+      <p>
+        El contenido original del sitio pertenece a EmprendeUS. Los nombres y marcas de terceros pertenecen a
+        sus respectivos propietarios y se usan solo con fines informativos.
+      </p>
+    </StaticPage>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleShell from '../../components/ArticleShell.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import FaqInline from '../../components/FaqInline.astro';
+import { SITE } from '../../data/site.js';
+import { articleSchema, breadcrumbSchema, faqSchema, howToSchema } from '../../data/seo.js';
+
+const meta = {
+  title: 'Cómo sacar el EIN sin SSN siendo no residente (Formulario SS-4, 2026)',
+  description: 'Guía paso a paso para obtener el EIN de tu LLC sin SSN ni ITIN: cómo llenar el Formulario SS-4, enviarlo por fax al IRS, tiempos y los errores que retrasan tu número federal.',
+  updated: 'julio 2026', published: '2026-07-01',
+};
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+
+const faqs = [
+  { q: '¿Puedo sacar el EIN sin SSN ni ITIN?', a: 'Sí. El IRS permite que un no residente sin SSN ni ITIN obtenga el EIN de su empresa. En la línea 7b del Formulario SS-4 escribís «Foreign» en lugar de un número, y presentás el formulario por fax o correo.' },
+  { q: '¿Cuánto cuesta obtener el EIN?', a: 'El EIN es totalmente gratis si lo tramitás vos mismo con el IRS. Si un servicio te cobra, estás pagando por la gestión y el ahorro de tiempo, no por el número en sí.' },
+  { q: '¿Cuánto tarda el IRS en darme el EIN?', a: 'Por fax suele tardar de 1 a 2 semanas; por correo, hasta 4 semanas. Los no residentes no pueden usar el sistema online del IRS, que exige un SSN o ITIN.' },
+  { q: '¿Necesito el EIN antes de abrir la cuenta bancaria?', a: 'Sí. Los bancos y fintechs (como Mercury o Relay) exigen el EIN para abrir una cuenta de negocio a nombre de tu LLC. Es uno de los primeros pasos tras registrar la empresa.' },
+  { q: '¿El EIN es lo mismo que el ITIN?', a: 'No. El EIN identifica a tu empresa ante el IRS; el ITIN es tu identificación fiscal personal como individuo sin SSN. Muchos no residentes necesitan el EIN pero nunca el ITIN.' },
+];
+const toc = [
+  { id: 'que-es', label: 'Qué es el EIN y para qué sirve' },
+  { id: 'sin-ssn', label: 'Por qué podés obtenerlo sin SSN' },
+  { id: 'ss4', label: 'Cómo llenar el Formulario SS-4' },
+  { id: 'enviar', label: 'Cómo enviarlo al IRS (fax vs correo)' },
+  { id: 'errores', label: 'Errores que retrasan tu EIN' },
+  { id: 'faq', label: 'Preguntas frecuentes' },
+];
+const sources = [
+  { label: 'IRS — Sobre el Formulario SS-4', href: 'https://www.irs.gov/es/forms-pubs/about-form-ss-4' },
+  { label: 'IRS — Instrucciones del Formulario SS-4', href: 'https://www.irs.gov/instructions/iss4sp' },
+  { label: 'IRS — Cómo solicitar un EIN', href: 'https://www.irs.gov/es/businesses/small-businesses-self-employed/how-to-apply-for-an-ein' },
+];
+
+const schemas = [
+  articleSchema({ ...meta, canonical }),
+  breadcrumbSchema([
+    { name: 'Inicio', url: SITE.url },
+    { name: 'EIN, ITIN & Impuestos', url: `${SITE.url}/impuestos` },
+    { name: 'Sacar el EIN sin SSN', url: canonical },
+  ]),
+  faqSchema(faqs),
+  howToSchema({
+    name: 'Cómo obtener el EIN sin SSN', description: meta.description, totalTime: 'P14D',
+    steps: [
+      { name: 'Registrar la LLC', text: 'Formá tu LLC antes de solicitar el EIN.' },
+      { name: 'Completar el SS-4', text: 'Llená el Formulario SS-4; en la línea 7b escribí «Foreign».' },
+      { name: 'Enviar por fax', text: 'Enviá el SS-4 por fax al IRS con una portada.' },
+      { name: 'Recibir el EIN', text: 'El IRS responde con tu EIN en 1-2 semanas por fax.' },
+    ],
+  }),
+];
+---
+<BaseLayout title={meta.title} description={meta.description} type="article" publishedTime={meta.published} modifiedTime={meta.published} jsonld={schemas}>
+  <Header />
+  <main id="contenido">
+    <ArticleShell title="Cómo sacar el EIN sin SSN siendo no residente" category="EIN, ITIN & Impuestos" readTime="11 min de lectura" updated={meta.updated} toc={toc} sources={sources}>
+      <p>
+        El <strong>EIN</strong> es el número que tu LLC necesita para operar, abrir cuenta bancaria y usar
+        pasarelas de pago como Stripe. La buena noticia para los no residentes: <strong>no necesitás SSN ni
+        ITIN para obtenerlo</strong>, y el trámite es gratis. Esta guía te explica exactamente cómo hacerlo,
+        con el detalle del Formulario SS-4 que marca la diferencia entre recibirlo en dos semanas o esperar meses.
+      </p>
+
+      <div class="callout callout--info">
+        <span class="callout__icon" aria-hidden="true">✳</span>
+        <p><strong>En una frase:</strong> completá el Formulario SS-4 escribiendo «Foreign» en la línea 7b,
+        enviálo por fax al IRS y recibí tu EIN en 1-2 semanas. Gratis.</p>
+      </div>
+
+      <h2 id="que-es">Qué es el EIN y para qué sirve</h2>
+      <p>
+        El <strong>EIN</strong> (Employer Identification Number) es el equivalente al «número de identificación
+        fiscal» de tu empresa ante el IRS. Con él vas a poder:
+      </p>
+      <ul>
+        <li>Abrir una <a href="/banca">cuenta bancaria de negocio</a> a nombre de tu LLC.</li>
+        <li>Activar pasarelas de pago (Stripe, PayPal Business, Shopify Payments).</li>
+        <li>Contratar empleados o contratistas y emitir formularios fiscales.</li>
+        <li>Presentar las declaraciones anuales de tu empresa (incluido el <a href="/impuestos/formulario-5472">Formulario 5472</a>).</li>
+      </ul>
+
+      <h2 id="sin-ssn">Por qué podés obtenerlo sin SSN</h2>
+      <p>
+        Existe un mito muy extendido de que sin SSN no se puede sacar el EIN. Es falso. El IRS contempla
+        explícitamente a los solicitantes extranjeros: si la «responsible party» (la persona responsable de
+        la empresa) no tiene SSN ni ITIN, el propio formulario permite indicar «Foreign». Lo único que cambia
+        para un no residente es <strong>el canal</strong>: no podés usar el sistema online del IRS (que exige
+        SSN/ITIN), así que se hace por fax o correo.
+      </p>
+
+      <AdSlot label="Publicidad Patrocinada · In-Article" height="120px" />
+
+      <h2 id="ss4">Cómo llenar el Formulario SS-4</h2>
+      <p>Estos son los campos clave donde los no residentes suelen dudar:</p>
+      <ul>
+        <li><strong>Línea 7a (Responsible party):</strong> tu nombre completo como dueño de la LLC.</li>
+        <li><strong>Línea 7b (SSN/ITIN):</strong> si no tenés ninguno, escribí <strong>«Foreign»</strong>.</li>
+        <li><strong>Línea 8a:</strong> marcá «Yes» (es una LLC) e indicá el número de miembros.</li>
+        <li><strong>Línea 9a:</strong> el tipo de entidad. Una LLC de un solo miembro suele marcarse como «disregarded entity».</li>
+        <li><strong>Línea 10 (Reason for applying):</strong> normalmente «Started new business» o «Banking purpose».</li>
+        <li><strong>Líneas 11-17:</strong> fecha de inicio, actividad principal y una descripción breve de lo que hace tu negocio (no necesita ser ultra específica).</li>
+      </ul>
+      <div class="callout callout--tip">
+        <span class="callout__icon" aria-hidden="true">◆</span>
+        <p>Firmá el formulario a mano y agregá un número de teléfono y de fax de contacto donde el IRS pueda
+        devolverte el EIN. Sin un fax de retorno, el proceso se alarga.</p>
+      </div>
+
+      <h2 id="enviar">Cómo enviarlo al IRS: fax vs. correo</h2>
+      <p>
+        Los solicitantes internacionales tienen dos vías. El <strong>fax es la más rápida</strong>: enviás el
+        SS-4 completo al número internacional del IRS con una portada que incluya tu nombre, dirección y un
+        número de fax de retorno; la respuesta llega en 1-2 semanas. Por <strong>correo</strong> el proceso es
+        el mismo pero puede tardar hasta 4 semanas. Confirmá siempre el número de fax vigente en las
+        <a href="https://www.irs.gov/instructions/iss4sp" target="_blank" rel="noopener nofollow">instrucciones oficiales del SS-4</a>,
+        porque el IRS lo actualiza.
+      </p>
+
+      <h2 id="errores">Errores que retrasan (o rechazan) tu EIN</h2>
+      <ul>
+        <li><strong>Dejar la línea 7b en blanco</strong> en vez de escribir «Foreign».</li>
+        <li>No incluir un <strong>número de fax de retorno</strong> en la portada.</li>
+        <li>Poner una descripción de actividad contradictoria con el tipo de entidad.</li>
+        <li>Solicitar el EIN <strong>antes</strong> de tener la LLC registrada en el estado.</li>
+        <li>Enviar el formulario sin firma manuscrita.</li>
+      </ul>
+
+      <div class="callout callout--warn">
+        <span class="callout__icon" aria-hidden="true">⚠</span>
+        <p>Tener el EIN no es el final del camino fiscal. Si sos dueño extranjero de una LLC de un solo
+        miembro, casi seguro debas presentar el <a href="/impuestos/formulario-5472">Formulario 5472</a>
+        cada año, y no hacerlo tiene una multa de $25,000.</p>
+      </div>
+
+      <FaqInline faqs={faqs} heading="Preguntas frecuentes" />
+    </ArticleShell>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StaticPage from '../components/StaticPage.astro';
+import { SITE } from '../data/site.js';
+import { breadcrumbSchema } from '../data/seo.js';
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const meta = { title: 'Metodología editorial', description: 'Cómo investigamos, verificamos y actualizamos cada guía de EmprendeUS, y qué fuentes oficiales usamos.' };
+---
+<BaseLayout title={meta.title} description={meta.description} jsonld={[breadcrumbSchema([{ name: 'Inicio', url: SITE.url }, { name: 'Metodología editorial', url: canonical }])]}>
+  <Header />
+  <main id="contenido">
+    <StaticPage title="Metodología editorial" subtitle="Cómo garantizamos que lo que leés sea preciso, útil y actualizado." updated={SITE.updatedLabel}>
+      <h2>1. Fuentes primarias primero</h2>
+      <p>
+        Toda afirmación sobre tarifas, plazos o requisitos se contrasta con <strong>fuentes oficiales</strong>:
+        el <a href="https://www.irs.gov/es" target="_blank" rel="noopener nofollow">IRS</a>, las
+        <a href="https://www.nass.org/business-services/state-business-portals" target="_blank" rel="noopener nofollow">Secretarías de Estado</a>,
+        <a href="https://www.fincen.gov/boi" target="_blank" rel="noopener nofollow">FinCEN</a> y la
+        <a href="https://www.sba.gov/" target="_blank" rel="noopener nofollow">SBA</a>. Cada guía enlaza sus
+        fuentes al pie para que puedas verificarlo por vos mismo.
+      </p>
+
+      <h2>2. Datos con fecha de verificación</h2>
+      <p>
+        Las tarifas estatales y las reglas del IRS cambian. Por eso indicamos la <strong>fecha en que
+        verificamos</strong> cada dato y revisamos las guías de mayor tráfico al menos una vez al año, además
+        de cuando hay cambios normativos relevantes (como los ajustes de BOI/FinCEN de 2025).
+      </p>
+
+      <h2>3. Comparativas sin conflicto de interés</h2>
+      <p>
+        Cuando comparamos servicios, evaluamos <strong>precio real, soporte en español y adecuación para no
+        residentes</strong>, y mostramos también las desventajas de cada opción. Las comisiones de afiliado
+        <strong>no</strong> influyen en el orden ni en la puntuación. Lo detallamos en la
+        <a href="/divulgacion">divulgación de afiliados</a>.
+      </p>
+
+      <h2>4. Lenguaje claro y honesto</h2>
+      <p>
+        Evitamos el lenguaje que exagera beneficios o esconde obligaciones. Si algo tiene un riesgo (como la
+        multa del <a href="/impuestos/formulario-5472">Formulario 5472</a>), lo decimos con claridad, aunque
+        sea incómodo.
+      </p>
+
+      <h2>5. No sustituimos asesoría profesional</h2>
+      <p>
+        EmprendeUS es un recurso educativo. Para decisiones concretas sobre tu estructura o tus impuestos,
+        recomendamos siempre consultar a un profesional con licencia en EE. UU. Si detectás un error en
+        alguna guía, escribinos por la <a href="/contacto">página de contacto</a> y lo corregimos.
+      </p>
+    </StaticPage>
+  </main>
+  <Footer />
+</BaseLayout>

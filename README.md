@@ -35,14 +35,33 @@ autoridad temática, E-E-A-T y SEO técnico impecable.
 
 ```
 src/
-  data/site.js             # Configuración central: marca, estados, proveedores, FAQs, nav, footer
+  data/
+    site.js                # Config central: marca, proveedores, FAQs, nav, footer
+    states.js              # Datos verificados de los 50 estados + helpers
+    seo.js                 # Constructores de JSON-LD (Article, FAQ, HowTo, Breadcrumb)
   layouts/BaseLayout.astro # <head>, SEO, JSON-LD base
-  components/              # Header, Hero+Calculadora, Comparador, Quiz, ContentHub, FaqEEAT, Footer…
+  components/              # Header, Hero+Calculadora, Comparador, Quiz, ContentHub,
+                           # FaqEEAT, ArticleShell, FaqInline, CategoryHub, StaticPage, Footer…
   pages/
     index.astro            # Homepage
-    guias/                 # Guía pilar + índice de guías
+    guias/                 # Índice + guía pilar (formar LLC no residente)
+    estados/               # index (comparador 50) + [slug] (50 páginas programáticas)
+    impuestos/             # hub + EIN sin SSN + ITIN + Formulario 5472
+    banca/                 # hub + cuentas para no residentes
+    herramientas/          # hub de herramientas
+    sobre-nosotros, metodologia, divulgacion, contacto, privacidad, terminos
 public/                    # robots.txt, favicon.svg, og-default.svg
 ```
+
+## Contenido (67 páginas)
+
+- **50 páginas de estados** (`/estados/[estado]`): cada una con tabla de costos, ventajas/desventajas
+  derivadas de datos reales, veredicto para no residentes, pasos, FAQ y fuente oficial enlazada.
+  Contenido único por estado (no thin content).
+- **Hub comparativo** de los 50 estados con tabla ordenable.
+- **Guías pilares**: formar LLC no residente, EIN sin SSN, ITIN, Formulario 5472, banca.
+- **Hubs de categoría** (silos SEO): impuestos, banca, herramientas.
+- **Páginas E-E-A-T**: sobre nosotros, metodología, divulgación, contacto, privacidad, términos.
 
 ## Desarrollo
 

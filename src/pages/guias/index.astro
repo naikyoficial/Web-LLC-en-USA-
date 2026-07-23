@@ -2,9 +2,14 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { FEATURED_ARTICLE, ARTICLES } from '../../data/site.js';
-
-const all = [FEATURED_ARTICLE, ...ARTICLES];
+const all = [
+  { href: '/guias/formar-llc-no-residente', category: 'Guía pilar', readTime: '16 min', updated: 'jul 2026', title: 'Cómo formar tu LLC en EE. UU. como no residente (guía completa 2026)' },
+  { href: '/impuestos/ein-sin-ssn', category: 'EIN', readTime: '11 min', updated: 'jul 2026', title: 'Cómo sacar el EIN sin SSN siendo no residente (Formulario SS-4)' },
+  { href: '/impuestos/formulario-5472', category: 'Impuestos', readTime: '13 min', updated: 'jul 2026', title: 'Formulario 5472: la declaración que evita una multa de $25,000' },
+  { href: '/impuestos/itin', category: 'ITIN', readTime: '10 min', updated: 'jul 2026', title: 'Cómo solicitar el ITIN siendo no residente (Formulario W-7)' },
+  { href: '/banca/cuentas-no-residentes', category: 'Banca', readTime: '10 min', updated: 'jul 2026', title: 'Mejores cuentas bancarias de negocio para no residentes' },
+  { href: '/estados', category: 'Estados', readTime: '8 min', updated: 'jul 2026', title: '¿En qué estado abrir tu LLC? Compara los 50 estados' },
+];
 ---
 <BaseLayout title="Guías" description="Guías verificadas en español para formar y gestionar tu LLC en Estados Unidos como no residente.">
   <Header />

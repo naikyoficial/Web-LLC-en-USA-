@@ -33,7 +33,7 @@ export const NAV = [
 // ---------------------------------------------------------------------------
 export const HERO_STATS = [
   { value: '50', label: 'estados cubiertos' },
-  { value: '30+', label: 'guías verificadas' },
+  { value: '55+', label: 'guías verificadas' },
   { value: '2026', label: 'datos actualizados' },
 ];
 
@@ -251,17 +251,17 @@ export const FEATURED_ARTICLE = {
 
 export const ARTICLES = [
   {
-    href: '/guias/formar-llc-no-residente',
+    href: '/impuestos/formulario-5472',
     category: 'Impuestos',
-    readTime: '9 min',
+    readTime: '13 min',
     updated: 'jul 2026',
     title: 'Formulario 5472: la declaración de $25,000 que no podés olvidar',
     imgLabel: '[ formulario 5472 ]',
   },
   {
-    href: '/guias/formar-llc-no-residente',
+    href: '/estados',
     category: 'Estados',
-    readTime: '11 min',
+    readTime: '8 min',
     updated: 'jul 2026',
     title: 'Wyoming vs Florida vs Delaware: ¿dónde te conviene abrir tu LLC?',
     imgLabel: '[ mapa comparativo ]',
@@ -275,7 +275,7 @@ export const FOOTER_COLS = [
   {
     title: 'Crear LLC',
     links: [
-      { label: 'LLC en Nuevo México', href: '/estados/nuevo-mexico' },
+      { label: 'LLC en Nuevo México', href: '/estados/new-mexico' },
       { label: 'LLC en Wyoming', href: '/estados/wyoming' },
       { label: 'LLC en Florida', href: '/estados/florida' },
       { label: 'LLC en Delaware', href: '/estados/delaware' },
