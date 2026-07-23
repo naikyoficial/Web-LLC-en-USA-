@@ -1,0 +1,75 @@
+---
+import { FAQS } from '../data/site.js';
+---
+<section class="eeat">
+  <div class="eeat__inner">
+    <!-- Caja de revisión editorial (E-E-A-T) -->
+    <div class="review-box">
+      <span class="review-box__icon" aria-hidden="true">⚖</span>
+      <div>
+        <div class="review-box__title">Contenido revisado por especialistas</div>
+        <p class="review-box__text">
+          Todos nuestros artículos siguen una <a href="/metodologia">metodología editorial</a> pública y
+          se contrastan con fuentes oficiales (IRS, FinCEN y las Secretarías de Estado) antes de
+          publicarse. No sustituyen la asesoría legal o fiscal personalizada de un profesional con licencia.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-head eeat__head">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2 class="section-title">Lo que más nos preguntan</h2>
+    </div>
+
+    <div class="faq">
+      {FAQS.map((f, i) => (
+        <details class="faq__item" open={i === 0}>
+          <summary class="faq__q">
+            <span>{f.q}</span>
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </summary>
+          <div class="faq__a">{f.a}</div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .eeat { background: var(--bg-neutral); padding: 76px 0; }
+  .eeat__inner { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+
+  .review-box {
+    background: #fff; border: 1px solid var(--border); border-left: 3px solid var(--bg-emerald);
+    border-radius: 14px; padding: 26px 28px; display: flex; align-items: flex-start; gap: 18px;
+    margin-bottom: 56px;
+  }
+  .review-box__icon {
+    width: 44px; height: 44px; border-radius: 12px; background: #eef9f2; color: var(--badge-text);
+    display: inline-flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+  }
+  .review-box__title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .review-box__text { font-size: 14px; line-height: 1.6; color: var(--text-2); margin: 0; }
+
+  .eeat__head { text-align: center; margin: 0 auto 40px; max-width: none; }
+  .eeat__head .section-title { margin-top: 12px; font-size: 36px; }
+
+  .faq { display: flex; flex-direction: column; gap: 12px; }
+  .faq__item { background: #fff; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .faq__q {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 24px; cursor: pointer; list-style: none;
+    font-size: 16px; font-weight: 600; color: var(--text);
+  }
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__icon { font-size: 20px; color: var(--success); flex-shrink: 0; transition: transform 0.2s; }
+  .faq__item[open] .faq__icon { transform: rotate(45deg); }
+  .faq__a {
+    padding: 0 24px 22px; font-size: 14.5px; line-height: 1.65; color: var(--text-2);
+    animation: euFade 0.25s ease both;
+  }
+
+  @media (max-width: 560px) {
+    .eeat__head .section-title { font-size: 27px; }
+  }
+</style>

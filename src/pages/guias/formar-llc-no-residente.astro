@@ -1,0 +1,248 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleShell from '../../components/ArticleShell.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import { SITE, STATES, STATE_ORDER } from '../../data/site.js';
+
+const meta = {
+  title: 'Cómo formar tu LLC en EE. UU. como no residente (guía completa 2026)',
+  description:
+    'Guía paso a paso para no residentes: elegir estado, agente registrado, EIN sin SSN por SS-4, cuenta bancaria remota y el Formulario 5472 obligatorio. Actualizada 2026.',
+  category: 'Guía pilar',
+  readTime: '16 min de lectura',
+  updated: 'julio 2026',
+  published: '2026-07-01',
+  modified: '2026-07-01',
+};
+
+const toc = [
+  { id: 'que-es', label: '1. Qué es una LLC y por qué te conviene' },
+  { id: 'estado', label: '2. Elegir el estado correcto' },
+  { id: 'agente', label: '3. Agente registrado y dirección' },
+  { id: 'registro', label: '4. Registrar la LLC' },
+  { id: 'ein', label: '5. Sacar el EIN sin SSN' },
+  { id: 'banca', label: '6. Abrir cuenta bancaria' },
+  { id: 'impuestos', label: '7. Impuestos y el Formulario 5472' },
+  { id: 'costos', label: '8. Cuánto cuesta en total' },
+];
+
+const sources = [
+  { label: 'IRS — Formulario SS-4 (solicitud de EIN)', href: 'https://www.irs.gov/es/forms-pubs/about-form-ss-4' },
+  { label: 'IRS — Formulario 5472 e instrucciones', href: 'https://www.irs.gov/forms-pubs/about-form-5472' },
+  { label: 'FinCEN — Beneficial Ownership Information (BOI)', href: 'https://www.fincen.gov/boi' },
+  { label: 'IRS — Número ITIN (W-7)', href: 'https://www.irs.gov/es/individuals/individual-taxpayer-identification-number' },
+];
+
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: meta.title,
+  description: meta.description,
+  inLanguage: 'es',
+  datePublished: meta.published,
+  dateModified: meta.modified,
+  author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.name,
+    logo: { '@type': 'ImageObject', url: `${SITE.url}/favicon.svg` },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+};
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Cómo formar una LLC en EE. UU. siendo no residente',
+  description: meta.description,
+  totalTime: 'P14D',
+  step: [
+    { '@type': 'HowToStep', name: 'Elegir el estado', text: 'Elegí el estado de registro según costo, privacidad y si vas a operar físicamente en EE. UU.' },
+    { '@type': 'HowToStep', name: 'Contratar agente registrado', text: 'Contratá un agente registrado con dirección física en el estado elegido.' },
+    { '@type': 'HowToStep', name: 'Registrar la LLC', text: 'Presentá los Articles of Organization ante la Secretaría de Estado.' },
+    { '@type': 'HowToStep', name: 'Solicitar el EIN', text: 'Solicitá el EIN al IRS con el Formulario SS-4 por fax o correo, sin necesidad de SSN.' },
+    { '@type': 'HowToStep', name: 'Abrir cuenta bancaria', text: 'Abrí una cuenta de negocio remota (Mercury, Relay) o presencial.' },
+    { '@type': 'HowToStep', name: 'Cumplir con impuestos', text: 'Presentá el Formulario 5472 + 1120 pro-forma cada año para evitar la multa de $25,000.' },
+  ],
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Guías', item: `${SITE.url}/guias` },
+    { '@type': 'ListItem', position: 3, name: meta.title, item: canonical },
+  ],
+};
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  type="article"
+  publishedTime={meta.published}
+  modifiedTime={meta.modified}
+  jsonld={[articleSchema, howToSchema, breadcrumbSchema]}
+>
+  <Header />
+  <main id="contenido">
+    <ArticleShell
+      title={meta.title}
+      category={meta.category}
+      readTime={meta.readTime}
+      updated={meta.updated}
+      toc={toc}
+      sources={sources}
+    >
+      <p>
+        Formar una <strong>LLC en Estados Unidos siendo no residente</strong> es más simple de lo que
+        parece, pero está lleno de pasos donde un error cuesta caro. Esta guía te lleva de principio a
+        fin —sin SSN, sin visa y de forma 100% remota— y te explica el trámite que casi ningún portal
+        en español menciona y que puede costarte <strong>$25,000</strong> si lo ignorás: el Formulario 5472.
+      </p>
+
+      <div class="callout callout--info">
+        <span class="callout__icon" aria-hidden="true">✳</span>
+        <p><strong>Resumen rápido:</strong> podés abrir tu LLC como extranjero en ~2 semanas. Necesitás
+        elegir estado, un agente registrado, presentar el registro, sacar el EIN con el Formulario SS-4
+        y luego cumplir cada año con el 5472. No necesitás ITIN para formar la LLC ni para el EIN.</p>
+      </div>
+
+      <h2 id="que-es">1. Qué es una LLC y por qué te conviene</h2>
+      <p>
+        Una <strong>LLC</strong> (Limited Liability Company) es una figura que combina la simplicidad de
+        un negocio individual con la protección patrimonial de una corporación. Para un no residente, sus
+        ventajas clave son: separar tu patrimonio personal del de la empresa, acceder a pasarelas de pago
+        como Stripe y PayPal, abrir cuenta bancaria en EE. UU. y proyectar confianza ante clientes globales.
+      </p>
+      <p>
+        Cualquier persona puede ser dueña de una LLC: ciudadano, residente o <strong>extranjero no
+        residente</strong>. No necesitás vivir ni viajar a Estados Unidos para constituirla.
+      </p>
+
+      <h2 id="estado">2. Elegir el estado correcto</h2>
+      <p>
+        No existe un «mejor estado» universal: depende de dónde residís, cómo opera tu negocio y qué
+        priorizás (costo, privacidad o reputación legal). Para la mayoría de no residentes con negocio
+        digital, <strong>Wyoming</strong> y <strong>Nuevo México</strong> son las opciones más
+        equilibradas por su bajo costo y privacidad.
+      </p>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead>
+            <tr><th>Estado</th><th>Registro</th><th>Costo anual</th><th>Privacidad</th></tr>
+          </thead>
+          <tbody>
+            {STATE_ORDER.map((k) => (
+              <tr>
+                <td>{STATES[k].name}</td>
+                <td>{STATES[k].reg}</td>
+                <td>{STATES[k].annual}</td>
+                <td>{STATES[k].privacy}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout--tip">
+        <span class="callout__icon" aria-hidden="true">◆</span>
+        <p>Evitá registrar en <strong>California</strong> si no operás allí: su impuesto de franquicia
+        mínimo de <strong>$800 al año</strong> es obligatorio aunque no tengas ingresos. Y <strong>Delaware</strong>
+        solo vale la pena si vas a levantar inversión de fondos de capital de riesgo.</p>
+      </div>
+
+      <h2 id="agente">3. Agente registrado y dirección de negocio</h2>
+      <p>
+        Todo estado exige un <strong>agente registrado</strong>: una persona o empresa con dirección
+        física en ese estado que recibe la correspondencia legal de tu LLC. Como no residente, vas a
+        contratar este servicio (entre $100 y $150 al año). Desde 2024, además, se pide una dirección de
+        negocio en EE. UU. para recibir correspondencia oficial; muchos proveedores la incluyen.
+      </p>
+
+      <h2 id="registro">4. Registrar la LLC</h2>
+      <p>Para constituir la LLC se presentan los <strong>Articles of Organization</strong> ante la
+        Secretaría de Estado, con estos datos:</p>
+      <ul>
+        <li>Nombre de la LLC (verificá que esté disponible y termine en «LLC»).</li>
+        <li>Nombre y dirección del agente registrado.</li>
+        <li>Organizador de la empresa (podés ser vos mismo).</li>
+        <li>Estructura de gestión (member-managed suele ser lo habitual para un solo dueño).</li>
+      </ul>
+      <p>El trámite es online en la mayoría de estados y suele aprobarse en pocos días.</p>
+
+      <AdSlot label="Publicidad Patrocinada · In-Article" height="120px" />
+
+      <h2 id="ein">5. Sacar el EIN sin SSN</h2>
+      <p>
+        El <strong>EIN</strong> (Employer Identification Number) es el número que identifica a tu empresa
+        ante el IRS. Lo necesitás para operar, abrir cuenta bancaria y usar pasarelas de pago. La buena
+        noticia: <strong>no necesitás SSN ni ITIN para obtenerlo</strong>.
+      </p>
+      <p>Como no residente, no podés solicitarlo online. Se hace con el <strong>Formulario SS-4</strong>:</p>
+      <ul>
+        <li>Completá el SS-4. En la línea 7b, si no tenés SSN ni ITIN, escribí <strong>«Foreign»</strong>.</li>
+        <li>Enviálo por <strong>fax</strong> al IRS (más rápido, 1–2 semanas) o por correo (hasta 4 semanas).</li>
+        <li>El trámite es <strong>gratis</strong>. Si un servicio te lo cobra, estás pagando por la gestión, no por el número.</li>
+      </ul>
+      <div class="callout callout--info">
+        <span class="callout__icon" aria-hidden="true">✳</span>
+        <p><strong>ITIN vs EIN:</strong> son cosas distintas. El EIN es de tu empresa; el ITIN es tu
+        identificación fiscal personal, y solo lo necesitás si tenés que presentar una declaración de
+        impuestos <em>personal</em> en EE. UU. Muchos no residentes nunca necesitan ITIN.</p>
+      </div>
+
+      <h2 id="banca">6. Abrir cuenta bancaria de negocio</h2>
+      <p>
+        Con la LLC registrada y el EIN en mano, podés abrir una cuenta de negocio. Para no residentes, las
+        opciones remotas más usadas son <strong>Mercury</strong> y <strong>Relay</strong> (fintech, sin
+        viajar), y para recibir pagos internacionales, <strong>Wise</strong> y <strong>Payoneer</strong>.
+        Los bancos tradicionales suelen exigir presencia física.
+      </p>
+
+      <h2 id="impuestos">7. Impuestos y el Formulario 5472 (el más importante)</h2>
+      <p>
+        Aquí está el error que arruina a muchos. Una LLC de <strong>un solo miembro con dueño extranjero</strong>
+        se considera «disregarded entity» y, aunque no pague impuesto federal sobre la renta en muchos
+        casos, <strong>está obligada a presentar el Formulario 5472 junto con un 1120 pro-forma cada año</strong>.
+      </p>
+      <div class="callout callout--warn">
+        <span class="callout__icon" aria-hidden="true">⚠</span>
+        <p><strong>Multa de $25,000.</strong> No presentar el Formulario 5472 a tiempo genera una sanción
+        automática de $25,000 del IRS. Es el fallo más caro y frecuente entre no residentes. Marcá la
+        fecha límite (normalmente el 15 de abril) y considerá un contador para el primer año.</p>
+      </div>
+      <p>
+        Sobre el <strong>reporte BOI de FinCEN</strong>: tras una regla provisional de 2025, las entidades
+        formadas en EE. UU. por personas de EE. UU. quedaron exentas, mientras que las entidades
+        extranjeras registradas para operar en el país sí reportan. Como las reglas siguen ajustándose,
+        confirmá tu situación en <a href="https://www.fincen.gov/boi" target="_blank" rel="noopener nofollow">fincen.gov/boi</a> antes de decidir.
+      </p>
+
+      <h2 id="costos">8. Cuánto cuesta en total</h2>
+      <p>Un cálculo realista del primer año para un negocio digital de no residente:</p>
+      <ul>
+        <li><strong>Registro estatal:</strong> desde $50 (Nuevo México) hasta $125 (Florida), pago único.</li>
+        <li><strong>Agente registrado:</strong> $100–$150 al año.</li>
+        <li><strong>Reporte anual estatal:</strong> desde $0 (NM, TX) hasta $800 (CA).</li>
+        <li><strong>Impuestos (5472 + 1120):</strong> gratis si lo hacés vos, o $200–$500 con contador.</li>
+      </ul>
+      <p>
+        En total, formar y mantener una LLC bien elegida puede costarte <strong>menos de $300 el primer
+        año</strong>. Usá nuestra <a href="/#comparador">comparativa de servicios</a> y la
+        <a href="/">calculadora por estado</a> para estimar tu caso concreto, y si querés una recomendación
+        personalizada, hacé el <a href="/#quiz">diagnóstico en 3 pasos</a>.
+      </p>
+
+      <div class="callout callout--info">
+        <span class="callout__icon" aria-hidden="true">✳</span>
+        <p><strong>Descargo:</strong> esta guía es informativa y no constituye asesoría legal ni fiscal.
+        Confirmá siempre con un profesional con licencia y en las fuentes oficiales antes de actuar.</p>
+      </div>
+    </ArticleShell>
+  </main>
+  <Footer />
+</BaseLayout>

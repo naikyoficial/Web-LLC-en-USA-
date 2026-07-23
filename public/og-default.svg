@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0F2C23"/>
+  <circle cx="1050" cy="120" r="260" fill="#A7E8C4" opacity="0.10"/>
+  <g transform="translate(80,90)">
+    <rect width="56" height="56" rx="14" fill="#A7E8C4"/>
+    <text x="28" y="40" font-family="Georgia, serif" font-size="34" font-weight="700" fill="#06231A" text-anchor="middle">E</text>
+    <text x="74" y="40" font-family="Georgia, serif" font-size="30" font-weight="700" fill="#F5FBF7">EmprendeUS</text>
+  </g>
+  <text x="80" y="290" font-family="Georgia, serif" font-size="62" font-weight="700" fill="#F5FBF7">Tu LLC en Estados Unidos,</text>
+  <text x="80" y="360" font-family="Georgia, serif" font-size="62" font-weight="700" fill="#A7E8C4">sin humo y en español</text>
+  <text x="80" y="440" font-family="Inter, Arial, sans-serif" font-size="28" fill="#A9BDB2">Guías, comparativas y herramientas para no residentes:</text>
+  <text x="80" y="480" font-family="Inter, Arial, sans-serif" font-size="28" fill="#A9BDB2">EIN sin SSN · ITIN · banca · Formulario 5472</text>
+  <text x="80" y="575" font-family="'JetBrains Mono', monospace" font-size="22" fill="#5C7F70">Actualizado para la temporada fiscal 2026</text>
+</svg>

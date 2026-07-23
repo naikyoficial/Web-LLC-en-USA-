@@ -1,0 +1,168 @@
+/* ==========================================================================
+   EmprendeUS — Sistema de diseño (tokens del handoff de Claude Design)
+   ========================================================================== */
+
+:root {
+  /* Fondos */
+  --bg-page: #fafaf8;
+  --bg-dark: #0a192f;
+  --bg-emerald: #0f2c23;
+  --bg-neutral: #f4f3ee;
+  --bg-ad: #f1f0ec;
+
+  /* Acento verde menta */
+  --cta: #a7e8c4;
+  --cta-hover: #93e0b4;
+  --cta-text: #06231a;
+  --badge-bg: #e7f6ec;
+  --badge-text: #1b5e43;
+  --success: #2fa96a;
+  --soft-bg: #d8f5e3;
+  --soft-border: #b5e6c9;
+
+  /* Texto */
+  --text: #0a192f;
+  --text-2: #4a554f;
+  --text-3: #7a837e;
+  --text-4: #8b928c;
+  --on-dark: #f5fbf7;
+  --on-dark-2: #c4dcd1;
+  --on-dark-3: #a9bdb2;
+
+  /* Bordes */
+  --border: #e4e2db;
+  --border-2: #e7e5de;
+  --border-3: #ddd9ce;
+  --star: #e0a93b;
+  --con: #c6857f;
+
+  /* Sistema */
+  --maxw: 1200px;
+  --pad: 32px;
+  --radius-card: 18px;
+  --radius-btn: 12px;
+  --shadow-card: 0 1px 2px rgba(10, 25, 15, 0.04);
+  --shadow-feat: 0 20px 44px -22px rgba(15, 44, 35, 0.28);
+  --shadow-calc: 0 24px 60px -24px rgba(10, 25, 15, 0.45);
+  --font-head: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg-page);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+}
+
+a { color: var(--bg-emerald); text-decoration: none; }
+a:hover { color: var(--badge-text); }
+img { max-width: 100%; height: auto; }
+::selection { background: #c7f0db; }
+
+h1, h2, h3, h4 { font-family: var(--font-head); }
+
+/* Accesibilidad: foco visible */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--success);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--success);
+  font-weight: 500;
+}
+
+/* Botones base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.18s ease, transform 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  border: 1px solid transparent;
+  text-align: center;
+}
+.btn-primary { background: var(--cta); color: var(--cta-text); box-shadow: 0 1px 2px rgba(15, 44, 35, 0.12); }
+.btn-primary:hover { background: var(--cta-hover); color: var(--cta-text); transform: translateY(-1px); }
+.btn-ghost { background: #fff; color: var(--text); border-color: var(--border-3); }
+.btn-ghost:hover { border-color: var(--bg-emerald); color: var(--bg-emerald); }
+.btn-dark { background: var(--bg-emerald); color: var(--on-dark); }
+.btn-dark:hover { background: #153c30; color: var(--on-dark); transform: translateY(-1px); }
+
+@keyframes euFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Placeholders de anuncios */
+.ad-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #c9c6bc;
+  border-radius: 8px;
+  background: repeating-linear-gradient(135deg, #f6f5f1, #f6f5f1 10px, #f1f0eb 10px, #f1f0eb 20px);
+  text-align: center;
+}
+.ad-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9a968a;
+  line-height: 1.8;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Responsive global ---------- */
+@media (max-width: 900px) {
+  :root { --pad: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

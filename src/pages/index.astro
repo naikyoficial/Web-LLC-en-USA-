@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import Comparador from '../components/Comparador.astro';
+import Quiz from '../components/Quiz.astro';
+import ContentHub from '../components/ContentHub.astro';
+import FaqEEAT from '../components/FaqEEAT.astro';
+import Footer from '../components/Footer.astro';
+import { FAQS, PROVIDERS, SITE } from '../data/site.js';
+
+// JSON-LD: FAQPage (rich snippet) + ItemList del comparador
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Mejores servicios para formar una LLC como no residente',
+  itemListElement: PROVIDERS.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: p.name,
+  })),
+};
+---
+<BaseLayout
+  title={null}
+  description={SITE.description}
+  jsonld={[faqSchema, itemListSchema]}
+>
+  <Header />
+  <main id="contenido">
+    <Hero />
+    <TrustStrip />
+    <Comparador />
+    <Quiz />
+    <ContentHub />
+    <FaqEEAT />
+  </main>
+  <Footer />
+</BaseLayout>
