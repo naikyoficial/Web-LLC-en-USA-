@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleShell from '../../components/ArticleShell.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import FaqInline from '../../components/FaqInline.astro';
+import { SITE } from '../../data/site.js';
+import { articleSchema, breadcrumbSchema, faqSchema } from '../../data/seo.js';
+
+const meta = {
+  title: 'Mejores cuentas bancarias de negocio para no residentes con LLC (2026)',
+  description: 'Comparativa de cuentas bancarias y fintechs para no residentes con LLC en EE. UU.: Mercury, Relay, Wise y Payoneer. Requisitos, cómo abrir de forma remota y qué evitar.',
+  updated: 'julio 2026', published: '2026-07-01',
+};
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+
+const options = [
+  { name: 'Mercury', tipo: 'Fintech (banca de negocio)', mejorPara: 'LLC tecnológicas y startups; apertura 100% remota.', notas: 'Popular entre no residentes. Requiere EIN y documentos de la LLC. No disponible para todos los países.' },
+  { name: 'Relay', tipo: 'Fintech (banca de negocio)', mejorPara: 'Gestión de flujo de caja con múltiples subcuentas.', notas: 'Apertura remota, integración contable. Requisitos similares a Mercury.' },
+  { name: 'Wise Business', tipo: 'Cuenta multidivisa', mejorPara: 'Cobrar y pagar en varias monedas con bajo costo de cambio.', notas: 'Datos bancarios locales en varias divisas. No es un banco tradicional; ideal como complemento.' },
+  { name: 'Payoneer', tipo: 'Plataforma de pagos', mejorPara: 'Recibir pagos de marketplaces y clientes internacionales.', notas: 'Amplia cobertura de países. Útil para e-commerce y freelancers.' },
+];
+
+const faqs = [
+  { q: '¿Puedo abrir una cuenta bancaria de negocio sin viajar a EE. UU.?', a: 'Sí. Fintechs como Mercury y Relay permiten abrir una cuenta de negocio para tu LLC de forma 100% remota, sin viajar. Los bancos tradicionales, en cambio, suelen exigir presencia física.' },
+  { q: '¿Qué necesito para abrir la cuenta?', a: 'Generalmente: tu LLC registrada, el EIN, los documentos de formación (Articles of Organization), tu pasaporte y a veces un comprobante de domicilio. Cada plataforma tiene su lista y sus países soportados.' },
+  { q: '¿Mercury acepta mi país?', a: 'Mercury y otras fintechs mantienen listas de países soportados que cambian con el tiempo. Verificá siempre la lista vigente en su sitio antes de formar la LLC, para no llevarte sorpresas.' },
+  { q: '¿Necesito ITIN para abrir la cuenta?', a: 'Normalmente no. La mayoría de fintechs para LLC funcionan con el EIN de la empresa y tu pasaporte, sin exigir ITIN.' },
+  { q: '¿Es mejor una fintech o un banco tradicional?', a: 'Para un no residente, las fintechs (Mercury, Relay) suelen ser la vía más práctica por la apertura remota. Un banco tradicional puede dar más servicios pero casi siempre requiere presentarte en persona en una sucursal de EE. UU.' },
+];
+const toc = [
+  { id: 'panorama', label: 'El panorama para no residentes' },
+  { id: 'opciones', label: 'Comparativa de opciones' },
+  { id: 'requisitos', label: 'Requisitos para abrir' },
+  { id: 'pasos', label: 'Cómo abrir paso a paso' },
+  { id: 'evitar', label: 'Errores a evitar' },
+  { id: 'faq', label: 'Preguntas frecuentes' },
+];
+const sources = [
+  { label: 'IRS — El EIN, requisito para la cuenta bancaria', href: 'https://www.irs.gov/es/businesses/small-businesses-self-employed/how-to-apply-for-an-ein' },
+  { label: 'FinCEN — Regulación de cuentas y BOI', href: 'https://www.fincen.gov/boi' },
+];
+const schemas = [
+  articleSchema({ ...meta, canonical }),
+  breadcrumbSchema([
+    { name: 'Inicio', url: SITE.url },
+    { name: 'Cuentas Bancarias', url: `${SITE.url}/banca` },
+    { name: 'Cuentas para no residentes', url: canonical },
+  ]),
+  faqSchema(faqs),
+];
+---
+<BaseLayout title={meta.title} description={meta.description} type="article" publishedTime={meta.published} modifiedTime={meta.published} jsonld={schemas}>
+  <Header />
+  <main id="contenido">
+    <ArticleShell title="Mejores cuentas bancarias de negocio para no residentes" category="Cuentas Bancarias" readTime="10 min de lectura" updated={meta.updated} toc={toc} sources={sources}>
+      <p>
+        Tener la LLC y el EIN es solo la mitad del camino: sin una <strong>cuenta bancaria de negocio</strong>
+        no podés cobrar como empresa ni separar tus finanzas. La buena noticia es que, como no residente, hoy
+        podés abrir una cuenta <strong>sin viajar a EE. UU.</strong> Acá comparamos las mejores opciones y te
+        decimos qué necesitás.
+      </p>
+
+      <div class="callout callout--info">
+        <span class="callout__icon" aria-hidden="true">✳</span>
+        <p><strong>Requisito previo:</strong> casi todas las plataformas piden el <a href="/impuestos/ein-sin-ssn">EIN de tu LLC</a>.
+        Sacá el EIN antes de intentar abrir la cuenta.</p>
+      </div>
+
+      <h2 id="panorama">El panorama para no residentes</h2>
+      <p>
+        Los bancos tradicionales de EE. UU. (Chase, Bank of America) suelen exigir que te presentes en persona
+        en una sucursal, lo que complica las cosas si vivís fuera. Por eso, la mayoría de los emprendedores no
+        residentes usan <strong>fintechs de banca de negocio</strong> que permiten apertura remota, o
+        <strong>plataformas de pago multidivisa</strong> como complemento.
+      </p>
+
+      <h2 id="opciones">Comparativa de opciones</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Plataforma</th><th>Tipo</th><th>Mejor para</th></tr></thead>
+          <tbody>
+            {options.map((o) => (
+              <tr><td><strong>{o.name}</strong></td><td>{o.tipo}</td><td>{o.mejorPara}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:14px;color:var(--text-3)">Disponibilidad y requisitos cambian por país y con el tiempo; verificá siempre en el sitio oficial de cada plataforma.</p>
+
+      <AdSlot label="Publicidad Patrocinada · In-Article" height="120px" />
+
+      <h2 id="requisitos">Requisitos para abrir la cuenta</h2>
+      <ul>
+        <li>LLC registrada y en regla (Articles of Organization).</li>
+        <li><a href="/impuestos/ein-sin-ssn">EIN de la empresa</a>.</li>
+        <li>Pasaporte vigente del dueño.</li>
+        <li>A veces: comprobante de domicilio y descripción de la actividad del negocio.</li>
+        <li>Que tu país esté en la lista de países soportados por la plataforma.</li>
+      </ul>
+
+      <h2 id="pasos">Cómo abrir paso a paso</h2>
+      <ol>
+        <li>Confirmá que tu país esté soportado por la plataforma elegida.</li>
+        <li>Formá tu <a href="/guias/formar-llc-no-residente">LLC</a> y obtené el EIN.</li>
+        <li>Reuní los documentos (formación, EIN, pasaporte).</li>
+        <li>Completá la solicitud online y describí con claridad tu modelo de negocio.</li>
+        <li>Respondé rápido cualquier verificación adicional que pidan (KYC).</li>
+      </ol>
+
+      <h2 id="evitar">Errores a evitar</h2>
+      <ul>
+        <li><strong>Formar la LLC antes de verificar</strong> si tu país está soportado por el banco/fintech.</li>
+        <li>Describir la actividad del negocio de forma vaga o contradictoria.</li>
+        <li>Usar una cuenta personal para cobrar de la empresa (rompe la protección de la LLC).</li>
+        <li>Olvidar que la cuenta no te exime del <a href="/impuestos/formulario-5472">Formulario 5472</a>.</li>
+      </ul>
+
+      <FaqInline faqs={faqs} heading="Preguntas frecuentes sobre banca para no residentes" />
+    </ArticleShell>
+  </main>
+  <Footer />
+</BaseLayout>

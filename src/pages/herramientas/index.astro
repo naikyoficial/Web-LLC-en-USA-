@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CategoryHub from '../../components/CategoryHub.astro';
+import { SITE } from '../../data/site.js';
+import { breadcrumbSchema } from '../../data/seo.js';
+
+const meta = {
+  title: 'Herramientas gratis para tu LLC en EE. UU. (calculadora y diagnóstico)',
+  description: 'Herramientas gratuitas para no residentes: calculadora de costos de LLC por estado, diagnóstico LLC vs C-Corp en 3 pasos y comparador de los 50 estados.',
+};
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const cards = [
+  { href: '/#top', tag: 'Calculadora', title: 'Calculadora de costos por estado', desc: 'Compará al instante la tarifa de registro y el costo anual de tu LLC en cada estado.' },
+  { href: '/#quiz', tag: 'Diagnóstico', title: 'Diagnóstico LLC vs C-Corp', desc: 'Respondé 3 preguntas y obtené una recomendación personalizada de estructura, estado y documentos.' },
+  { href: '/estados', tag: 'Comparador', title: 'Comparador de los 50 estados', desc: 'Tabla ordenable con registro, reporte anual, impuestos y privacidad de los 50 estados.' },
+  { href: '/#comparador', tag: 'Comparativa', title: 'Comparador de servicios de LLC', desc: 'Los mejores servicios de formación para no residentes, con precios y pros/cons honestos.' },
+];
+---
+<BaseLayout title={meta.title} description={meta.description} jsonld={[breadcrumbSchema([{ name: 'Inicio', url: SITE.url }, { name: 'Herramientas', url: canonical }])]}>
+  <Header />
+  <main id="contenido">
+    <CategoryHub
+      eyebrow="Herramientas"
+      title="Herramientas gratis para decidir con datos"
+      lead="Dejá de adivinar. Usá nuestras herramientas interactivas para estimar costos, elegir estructura y comparar estados y servicios, todo pensado para el caso de un no residente."
+      crumb="Herramientas"
+      cards={cards}
+    />
+  </main>
+  <Footer />
+</BaseLayout>

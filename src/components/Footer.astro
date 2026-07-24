@@ -1,0 +1,86 @@
+---
+import { FOOTER_COLS, SITE } from '../data/site.js';
+---
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">
+          <span class="footer__mark" aria-hidden="true">E</span>
+          <span class="footer__name">EmprendeUS</span>
+        </div>
+        <p class="footer__desc">El portal en español para formar y gestionar tu empresa en Estados Unidos con información clara, verificada e independiente.</p>
+      </div>
+      {FOOTER_COLS.map((col) => (
+        <div>
+          <div class="footer__col-title">{col.title}</div>
+          <div class="footer__links">
+            {col.links.map((lnk) => (
+              <a href={lnk.href} class="footer__link">{lnk.label}</a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="footer__legal">
+      <p>
+        Aviso legal: EmprendeUS es un portal de información y comparación. No somos un despacho de
+        abogados, contadores públicos (CPA) ni un agente registrado, y no proporcionamos asesoría
+        legal, fiscal ni financiera. La información se ofrece «tal cual» con fines educativos y puede
+        contener enlaces de afiliados por los que recibimos una comisión sin costo adicional para ti.
+        Consulta siempre a un profesional con licencia antes de tomar decisiones sobre la formación de
+        tu empresa o tus impuestos. Los nombres de terceros son marcas de sus respectivos propietarios.
+      </p>
+    </div>
+    <div class="footer__bottom">
+      <span>© {new Date().getFullYear()} {SITE.name}. Todos los derechos reservados.</span>
+      <div class="footer__bottom-links">
+        <a href="/privacidad">Política de privacidad</a>
+        <a href="/terminos">Términos</a>
+        <a href="/sitemap-index.xml">Mapa del sitio</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--bg-dark); color: var(--on-dark-3); padding: 64px 0 0; }
+  .footer__grid {
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px;
+    padding-bottom: 48px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .footer__brand { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .footer__mark {
+    width: 30px; height: 30px; border-radius: 8px; background: var(--cta);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--cta-text); font-family: var(--font-head); font-weight: 700; font-size: 17px;
+  }
+  .footer__name { font-family: var(--font-head); font-weight: 700; font-size: 20px; color: var(--on-dark); }
+  .footer__desc { font-size: 13.5px; line-height: 1.6; max-width: 300px; margin: 0; }
+  .footer__col-title {
+    font-size: 12.5px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
+    color: var(--on-dark); margin-bottom: 16px;
+  }
+  .footer__links { display: flex; flex-direction: column; gap: 11px; }
+  .footer__link { font-size: 13.5px; color: var(--on-dark-3); }
+  .footer__link:hover { color: var(--cta); }
+
+  .footer__legal { padding: 28px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+  .footer__legal p { font-size: 11.5px; line-height: 1.7; color: #6e8579; margin: 0; }
+
+  .footer__bottom {
+    padding: 22px 0 40px; display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap; font-size: 12.5px; color: #6e8579;
+  }
+  .footer__bottom-links { display: flex; gap: 22px; }
+  .footer__bottom-links a { font-size: 12.5px; color: var(--on-dark-3); }
+  .footer__bottom-links a:hover { color: var(--cta); }
+
+  @media (max-width: 860px) {
+    .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  @media (max-width: 520px) {
+    .footer__grid { grid-template-columns: 1fr; }
+  }
+</style>

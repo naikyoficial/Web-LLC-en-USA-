@@ -1,0 +1,40 @@
+---
+// Contenedor para páginas de contenido estático (legal, sobre nosotros, etc.)
+const { title, subtitle, updated } = Astro.props;
+---
+<div class="container static">
+  <nav class="crumbs" aria-label="Ruta de navegación">
+    <a href="/">Inicio</a> <span aria-hidden="true">›</span>
+    <span class="crumbs__current">{title}</span>
+  </nav>
+  <header class="static__head">
+    <h1 class="static__title">{title}</h1>
+    {subtitle && <p class="static__sub">{subtitle}</p>}
+    {updated && <p class="static__updated">Última actualización: {updated}</p>}
+  </header>
+  <div class="static__body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .static { padding: 40px 32px 72px; max-width: 780px; }
+  .crumbs { font-size: 13px; color: var(--text-3); margin-bottom: 20px; display: flex; gap: 8px; align-items: center; }
+  .crumbs a { color: var(--text-3); }
+  .crumbs__current { color: var(--text); }
+  .static__head { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .static__title { font-weight: 800; font-size: 42px; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 14px; text-wrap: balance; }
+  .static__sub { font-size: 18px; line-height: 1.6; color: var(--text-2); margin: 0; }
+  .static__updated { font-size: 13.5px; color: var(--text-3); margin: 14px 0 0; }
+  @media (max-width: 560px) { .static__title { font-size: 30px; } }
+</style>
+
+<style is:global>
+  .static__body > h2 { font-weight: 700; font-size: 25px; margin: 36px 0 12px; color: var(--text); }
+  .static__body > h3 { font-weight: 700; font-size: 19px; margin: 24px 0 8px; color: var(--text); }
+  .static__body > p { font-size: 16.5px; line-height: 1.7; color: #2c3733; margin: 0 0 16px; }
+  .static__body > ul, .static__body > ol { font-size: 16.5px; line-height: 1.7; color: #2c3733; margin: 0 0 16px; padding-left: 24px; }
+  .static__body > ul li, .static__body > ol li { margin-bottom: 7px; }
+  .static__body a { color: var(--badge-text); text-decoration: underline; text-underline-offset: 2px; }
+  .static__body strong { color: var(--text); }
+</style>

@@ -1,0 +1,29 @@
+---
+import { SOURCES } from '../data/site.js';
+---
+<section class="container trust">
+  <div class="trust__inner">
+    <span class="trust__label">Cobertura basada en fuentes oficiales de</span>
+    <div class="trust__logos">
+      {SOURCES.map((src) => (
+        <a href={src.href} class="trust__logo" target="_blank" rel="noopener nofollow" title={`Fuente oficial: ${src.name}`}>{src.name}</a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .trust { padding: 20px 32px 56px; }
+  .trust__inner {
+    border-top: 1px solid var(--border-2); border-bottom: 1px solid var(--border-2);
+    padding: 22px 0; display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+  }
+  .trust__label { font-size: 12.5px; color: var(--text-4); font-weight: 500; white-space: nowrap; }
+  .trust__logos { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+  .trust__logo {
+    font-family: var(--font-head); font-weight: 600; font-size: 16px; color: #b4b0a5;
+    transition: color 0.18s ease;
+  }
+  .trust__logo:hover { color: var(--bg-emerald); }
+</style>

@@ -1,0 +1,102 @@
+---
+import { PROVIDERS } from '../data/site.js';
+
+function stars(n, half) {
+  return '★'.repeat(n) + (half ? '½' : '');
+}
+---
+<section id="comparador" class="container comparador">
+  <div class="section-head">
+    <span class="eyebrow">Comparativa 2026</span>
+    <h2 class="section-title">Los mejores servicios para formar tu LLC como no residente</h2>
+    <p class="section-lead">
+      Analizamos precio real, atención en español y soporte para no residentes (EIN sin SSN, banca y
+      Formulario 5472). Las comisiones de afiliado no alteran nuestra evaluación editorial.
+    </p>
+  </div>
+
+  <div class="providers">
+    {PROVIDERS.map((p) => (
+      <article class={`provider ${p.featured ? 'provider--featured' : ''}`}>
+        {p.featured && p.badge && <div class="provider__badge">{p.badge}</div>}
+        <div class="provider__top">
+          <h3 class="provider__name">{p.name}</h3>
+          <div class="provider__rating">
+            <div class="provider__stars" aria-hidden="true">{stars(p.stars, p.starsHalf)}</div>
+            <div class="provider__score">{p.rating}</div>
+          </div>
+        </div>
+        <div class="provider__price">
+          <span class="provider__price-val">{p.price}</span>
+          <span class="provider__price-note">{p.priceNote}</span>
+        </div>
+        <ul class="provider__list provider__pros">
+          {p.pros.map((pro) => (
+            <li><span class="ic ic--pro" aria-hidden="true">✓</span>{pro}</li>
+          ))}
+        </ul>
+        <ul class="provider__list provider__cons">
+          {p.cons.map((con) => (
+            <li><span class="ic ic--con" aria-hidden="true">–</span>{con}</li>
+          ))}
+        </ul>
+        <a
+          href={p.href}
+          class={`btn provider__cta ${p.featured ? 'btn-primary' : 'btn-dark'}`}
+          rel="sponsored nofollow noopener"
+        >Ver oferta especial →</a>
+      </article>
+    ))}
+  </div>
+  <p class="comparador__disclaimer">Los enlaces marcados pueden generar una comisión de afiliado sin costo adicional para ti.</p>
+</section>
+
+<style>
+  .comparador { padding: 40px 32px 72px; }
+  .section-head { max-width: 640px; margin-bottom: 40px; }
+  .section-title {
+    font-weight: 700; font-size: 40px; line-height: 1.1; letter-spacing: -0.02em;
+    margin: 12px 0 14px; color: var(--text); text-wrap: balance;
+  }
+  .section-lead { font-size: 16.5px; line-height: 1.6; color: var(--text-2); margin: 0; }
+
+  .providers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch; }
+  .provider {
+    position: relative; background: #fff; border-radius: var(--radius-card);
+    padding: 30px 26px 28px; display: flex; flex-direction: column;
+    border: 1px solid var(--border); box-shadow: var(--shadow-card);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .provider:hover { transform: translateY(-3px); box-shadow: 0 18px 40px -20px rgba(10, 25, 15, 0.22); }
+  .provider--featured { border: 1.5px solid var(--cta); box-shadow: var(--shadow-feat); margin-top: 12px; }
+  .provider__badge {
+    position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%);
+    background: var(--cta); color: var(--cta-text); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.03em; padding: 6px 14px; border-radius: 999px; white-space: nowrap;
+    box-shadow: 0 4px 14px -4px rgba(15, 44, 35, 0.4);
+  }
+  .provider__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .provider__name { font-weight: 700; font-size: 22px; margin: 0; color: var(--text); }
+  .provider__rating { text-align: right; }
+  .provider__stars { color: var(--star); font-size: 14px; letter-spacing: 1px; }
+  .provider__score { font-size: 11.5px; color: var(--text-4); }
+  .provider__price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 18px; }
+  .provider__price-val { font-family: var(--font-head); font-weight: 700; font-size: 30px; color: var(--bg-emerald); }
+  .provider__price-note { font-size: 13px; color: var(--text-4); }
+  .provider__list { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-direction: column; gap: 9px; }
+  .provider__cons { margin-bottom: 22px; }
+  .provider__list li { display: flex; align-items: flex-start; gap: 9px; font-size: 13.5px; line-height: 1.4; }
+  .provider__pros li { color: #33403a; }
+  .provider__cons li { color: #9a968a; }
+  .ic { font-weight: 700; margin-top: 1px; }
+  .ic--pro { color: var(--success); }
+  .ic--con { color: var(--con); }
+  .provider__cta { margin-top: auto; padding: 13px; font-size: 14.5px; width: 100%; }
+  .comparador__disclaimer { font-family: var(--font-mono); font-size: 11px; color: #a29e92; margin: 24px 0 0; text-align: center; }
+
+  @media (max-width: 900px) {
+    .providers { grid-template-columns: 1fr; gap: 28px; }
+    .provider--featured { margin-top: 0; }
+    .section-title { font-size: 30px; }
+  }
+</style>

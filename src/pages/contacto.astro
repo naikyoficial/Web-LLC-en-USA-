@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StaticPage from '../components/StaticPage.astro';
+import { SITE } from '../data/site.js';
+import { breadcrumbSchema } from '../data/seo.js';
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const meta = { title: 'Contacto', description: 'Ponte en contacto con el equipo de EmprendeUS para sugerencias, correcciones o consultas de prensa.' };
+// Cambiá este correo por el tuyo real antes de publicar.
+const email = 'contacto@emprendeus.com';
+---
+<BaseLayout title={meta.title} description={meta.description} jsonld={[breadcrumbSchema([{ name: 'Inicio', url: SITE.url }, { name: 'Contacto', url: canonical }])]}>
+  <Header />
+  <main id="contenido">
+    <StaticPage title="Contacto" subtitle="Leemos todo. Escribinos y te respondemos.">
+      <h2>Escribinos</h2>
+      <p>
+        Para sugerencias de temas, correcciones a una guía, propuestas de colaboración o consultas de prensa,
+        podés escribirnos a <a href={`mailto:${email}`}>{email}</a>.
+      </p>
+
+      <h2>¿Encontraste un error?</h2>
+      <p>
+        Nos tomamos muy en serio la precisión. Si viste un dato desactualizado o incorrecto en alguna guía,
+        avisanos con el enlace de la página y lo revisamos lo antes posible. Es la mejor forma de ayudarnos a
+        mantener la calidad.
+      </p>
+
+      <h2>Lo que no hacemos</h2>
+      <p>
+        No tramitamos LLCs ni damos asesoría legal o fiscal personalizada. Si necesitás formar tu empresa,
+        mirá nuestro <a href="/#comparador">comparador de servicios</a>; si necesitás asesoría, consultá a un
+        profesional con licencia.
+      </p>
+    </StaticPage>
+  </main>
+  <Footer />
+</BaseLayout>

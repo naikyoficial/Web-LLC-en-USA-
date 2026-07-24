@@ -1,0 +1,231 @@
+---
+import { QUIZ_PERKS } from '../data/site.js';
+---
+<section id="quiz" class="quiz">
+  <div class="quiz__inner">
+    <div class="quiz__copy">
+      <span class="eyebrow eyebrow--light">Herramienta interactiva</span>
+      <h2 class="quiz__title">Lanza tu negocio: diagnóstico en 3 pasos</h2>
+      <p class="quiz__lead">
+        Responde tres preguntas y te decimos si te conviene una LLC o una C-Corp, en qué estado
+        registrarla y qué documentos necesitas para empezar.
+      </p>
+      <ul class="quiz__perks">
+        {QUIZ_PERKS.map((perk) => (
+          <li><span class="quiz__check" aria-hidden="true">✓</span>{perk}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="quiz__widget" data-quiz>
+      <div class="quiz__progress" aria-hidden="true">
+        <div class="quiz__dot" data-dot="0"></div>
+        <div class="quiz__dot" data-dot="1"></div>
+        <div class="quiz__dot" data-dot="2"></div>
+      </div>
+      <div data-quiz-body></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .quiz { background: var(--bg-dark); padding: 80px 0; }
+  .quiz__inner {
+    max-width: 1080px; margin: 0 auto; padding: 0 32px;
+    display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: center;
+  }
+  .eyebrow--light { color: #7fcba3; }
+  .quiz__title {
+    font-weight: 700; font-size: 40px; line-height: 1.1; letter-spacing: -0.02em;
+    margin: 14px 0 16px; color: var(--on-dark); text-wrap: balance;
+  }
+  .quiz__lead { font-size: 16.5px; line-height: 1.65; color: var(--on-dark-3); margin: 0 0 28px; }
+  .quiz__perks { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+  .quiz__perks li { display: flex; align-items: center; gap: 12px; font-size: 14.5px; color: var(--on-dark-2); }
+  .quiz__check {
+    width: 26px; height: 26px; border-radius: 8px; background: rgba(167, 232, 196, 0.12);
+    color: var(--cta); display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .quiz__widget {
+    background: var(--bg-page); border-radius: 20px; padding: 34px;
+    box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.5); min-height: 420px;
+  }
+  .quiz__progress { display: flex; align-items: center; gap: 8px; margin-bottom: 26px; }
+  .quiz__dot { height: 5px; flex: 1; border-radius: 999px; background: #e0ded6; transition: background 0.3s; }
+  .quiz__dot.is-done { background: var(--success); }
+  .quiz__dot.is-active { background: var(--cta); }
+
+  /* Estilos inyectados por JS */
+  :global(.q-step-label) {
+    font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--success); margin-bottom: 10px;
+  }
+  :global(.q-question) {
+    font-family: var(--font-head); font-weight: 700; font-size: 25px; line-height: 1.2;
+    margin: 0 0 24px; color: var(--text);
+  }
+  :global(.q-options) { display: flex; flex-direction: column; gap: 12px; }
+  :global(.q-option) {
+    display: flex; flex-direction: column; align-items: flex-start; text-align: left; width: 100%;
+    padding: 15px 18px; border-radius: 13px; border: 1px solid #e0ded6; background: #fff;
+    cursor: pointer; font-family: inherit; transition: all 0.15s;
+  }
+  :global(.q-option:hover) { border-color: var(--cta); background: #f3fbf6; }
+  :global(.q-option strong) { font-size: 15px; font-weight: 600; color: var(--text); }
+  :global(.q-option span) { font-size: 13px; color: var(--text-3); margin-top: 2px; }
+  :global(.q-back) {
+    margin-top: 22px; background: none; border: none; font-size: 13.5px; color: var(--text-3);
+    cursor: pointer; font-family: inherit;
+  }
+  :global(.q-result) { animation: euFade 0.4s ease both; }
+  :global(.q-result__label) {
+    font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--success); margin-bottom: 8px;
+  }
+  :global(.q-result__title) {
+    font-family: var(--font-head); font-weight: 700; font-size: 30px; line-height: 1.15;
+    margin: 0 0 6px; color: var(--bg-emerald);
+  }
+  :global(.q-result__summary) { font-size: 14.5px; line-height: 1.55; color: var(--text-2); margin: 0 0 22px; }
+  :global(.q-result__box) { background: #f1f0eb; border-radius: 14px; padding: 20px; margin-bottom: 22px; }
+  :global(.q-result__box-title) { font-size: 12.5px; font-weight: 600; color: var(--text); margin-bottom: 14px; }
+  :global(.q-result__reqs) { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 11px; }
+  :global(.q-result__reqs li) { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; line-height: 1.4; color: #33403a; }
+  :global(.q-result__reqs li span) { color: var(--success); font-weight: 700; }
+  :global(.q-result__ctas) { display: flex; gap: 12px; flex-wrap: wrap; }
+  :global(.q-result__reset) {
+    font-size: 14px; font-weight: 500; color: var(--text-2); background: #fff;
+    border: 1px solid var(--border-3); padding: 13px 18px; border-radius: 11px; cursor: pointer; font-family: inherit;
+  }
+
+  .q-fade { animation: euFade 0.35s ease both; }
+
+  @media (max-width: 900px) {
+    .quiz__inner { grid-template-columns: 1fr; gap: 40px; }
+    .quiz__title { font-size: 30px; }
+    .quiz__widget { padding: 24px; }
+  }
+</style>
+
+<script>
+  const STEPS = [
+    {
+      label: 'Paso 1 de 3', q: '¿Cuál es tu situación migratoria en EE. UU.?', key: 'residency',
+      opts: [
+        { label: 'Residente / ciudadano', desc: 'Tengo SSN o green card', val: 'resident' },
+        { label: 'No residente', desc: 'Vivo fuera de EE. UU.', val: 'nonresident' },
+      ],
+    },
+    {
+      label: 'Paso 2 de 3', q: '¿Qué tipo de negocio vas a iniciar?', key: 'business',
+      opts: [
+        { label: 'Servicios / freelance', desc: 'Consultoría, diseño, marketing', val: 'services' },
+        { label: 'E-commerce / Amazon', desc: 'Venta de productos online', val: 'ecommerce' },
+        { label: 'Startup con inversión', desc: 'Busco levantar capital', val: 'startup' },
+      ],
+    },
+    {
+      label: 'Paso 3 de 3', q: '¿En qué estado prefieres registrarte?', key: 'stateChoice',
+      opts: [
+        { label: 'Wyoming o Nuevo México', desc: 'Bajo costo y privacidad', val: 'lowcost' },
+        { label: 'Florida o Texas', desc: 'Presencia y comunidad', val: 'presence' },
+        { label: 'Delaware', desc: 'Pensando en inversión', val: 'delaware' },
+      ],
+    },
+  ];
+
+  function buildResult(a) {
+    const isStartup = a.business === 'startup' || a.stateChoice === 'delaware';
+    if (isStartup) {
+      return {
+        structure: 'C-Corp en Delaware',
+        summary: 'Como buscas inversión, una C-Corp en Delaware es el estándar que esperan los fondos de capital de riesgo y facilita repartir acciones.',
+        requirements: ['Registro de C-Corp en Delaware', 'EIN federal (formulario SS-4)', 'Agente registrado en el estado', 'Acuerdo de accionistas y tabla de capitalización', 'Cuenta bancaria de negocio en EE. UU.'],
+      };
+    }
+    const nonResident = a.residency === 'nonresident';
+    const stateName = a.stateChoice === 'presence' ? 'Florida' : 'Wyoming';
+    return {
+      structure: 'LLC en ' + stateName,
+      summary: nonResident
+        ? 'Para un no residente con este perfil, una LLC ofrece simplicidad fiscal y protección de tus bienes personales sin exigir presencia física en EE. UU.'
+        : 'Una LLC te da protección de responsabilidad y flexibilidad fiscal, ideal para tu tipo de negocio sin la complejidad de una corporación.',
+      requirements: [
+        'Registro de LLC en ' + stateName,
+        'EIN federal (formulario SS-4)' + (nonResident ? ' — se puede solicitar sin SSN' : ''),
+        'Agente registrado en el estado',
+        nonResident ? 'ITIN si vas a declarar impuestos personales' : 'Operating Agreement de la LLC',
+        nonResident ? 'Formulario 5472 + 1120 pro-forma cada año (¡obligatorio!)' : 'Cuenta bancaria de negocio en EE. UU.',
+      ],
+    };
+  }
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+  document.querySelectorAll('[data-quiz]').forEach((root) => {
+    const body = root.querySelector('[data-quiz-body]');
+    const dots = root.querySelectorAll('[data-dot]');
+    let step = 0;
+    const answers = {};
+
+    function paintDots() {
+      dots.forEach((d, i) => {
+        d.classList.toggle('is-done', i < step || step >= STEPS.length);
+        d.classList.toggle('is-active', i === step && step < STEPS.length);
+      });
+    }
+
+    function renderStep() {
+      const cur = STEPS[step];
+      const opts = cur.opts.map((o, i) => `
+        <button class="q-option" data-opt="${i}">
+          <strong>${esc(o.label)}</strong><span>${esc(o.desc)}</span>
+        </button>`).join('');
+      body.innerHTML = `
+        <div class="q-fade">
+          <div class="q-step-label">${esc(cur.label)}</div>
+          <h3 class="q-question">${esc(cur.q)}</h3>
+          <div class="q-options">${opts}</div>
+          ${step > 0 ? '<button class="q-back">← Volver</button>' : ''}
+        </div>`;
+      body.querySelectorAll('[data-opt]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          answers[cur.key] = cur.opts[+btn.dataset.opt].val;
+          step += 1;
+          update();
+        });
+      });
+      const back = body.querySelector('.q-back');
+      back?.addEventListener('click', () => { step = Math.max(0, step - 1); update(); });
+    }
+
+    function renderResult() {
+      const r = buildResult(answers);
+      const reqs = r.requirements.map((req) => `<li><span aria-hidden="true">✓</span>${esc(req)}</li>`).join('');
+      body.innerHTML = `
+        <div class="q-result">
+          <div class="q-result__label">Tu recomendación</div>
+          <h3 class="q-result__title">${esc(r.structure)}</h3>
+          <p class="q-result__summary">${esc(r.summary)}</p>
+          <div class="q-result__box">
+            <div class="q-result__box-title">Requisitos para empezar</div>
+            <ul class="q-result__reqs">${reqs}</ul>
+          </div>
+          <div class="q-result__ctas">
+            <a href="#comparador" class="btn btn-primary" style="flex:1;padding:13px;">Ver servicios recomendados</a>
+            <button class="q-result__reset">Reiniciar</button>
+          </div>
+        </div>`;
+      body.querySelector('.q-result__reset')?.addEventListener('click', () => {
+        step = 0; Object.keys(answers).forEach((k) => delete answers[k]); update();
+      });
+    }
+
+    function update() {
+      paintDots();
+      if (step >= STEPS.length) renderResult(); else renderStep();
+    }
+    update();
+  });
+</script>

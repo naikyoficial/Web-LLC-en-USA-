@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import ArticleShell from '../../../components/ArticleShell.astro';
+import AdSlot from '../../../components/AdSlot.astro';
+import FaqInline from '../../../components/FaqInline.astro';
+import { SITE } from '../../../data/site.js';
+import { SERVICES, SERVICE_MATCHUPS } from '../../../data/comparisons.js';
+import { articleSchema, breadcrumbSchema, faqSchema } from '../../../data/seo.js';
+
+export function getStaticPaths() {
+  return SERVICE_MATCHUPS.map((m) => ({ params: { slug: m.slug }, props: { m } }));
+}
+
+const { m } = Astro.props;
+const a = SERVICES[m.a];
+const b = SERVICES[m.b];
+
+const meta = {
+  title: `${a.name} vs ${b.name}: ¿qué servicio de LLC elegir? (2026)`,
+  description: `Comparativa honesta 2026 de ${a.name} vs ${b.name} para formar tu LLC como no residente: precio, soporte en español, EIN, banca, Formulario 5472 y cuál conviene.`,
+  updated: 'julio 2026', published: '2026-07-01',
+};
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+
+const faqs = [
+  { q: `¿${a.name} o ${b.name} es mejor para no residentes?`, a: `${a.name} (${a.priceLabel}) destaca por: ${a.bestFor} ${b.name} (${b.priceLabel}) destaca por: ${b.bestFor} La mejor opción depende de cuánto querés que te resuelvan y de tu presupuesto.` },
+  { q: `¿Cuál es más barato, ${a.name} o ${b.name}?`, a: `En precio de entrada, ${b.name} suele ser ${a.name}. Compará el precio del primer año ${a.priceLabel} frente a ${b.priceLabel}, y sumá siempre la tarifa estatal, que se paga aparte en ambos casos.` },
+  { q: '¿Estos servicios gestionan el EIN sin SSN?', a: `Sí, ambos ayudan a obtener el EIN. ${a.name}: ${a.ein}. ${b.name}: ${b.ein}. Recordá que el EIN en sí es gratuito ante el IRS; pagás por la gestión.` },
+  { q: '¿Incluyen el Formulario 5472?', a: `${a.name}: ${a.impuestos}. ${b.name}: ${b.impuestos}. Es un punto clave para no residentes, porque no presentar el 5472 tiene una multa de $25,000.` },
+];
+const toc = [
+  { id: 'tabla', label: 'Comparativa lado a lado' },
+  { id: 'a', label: `${a.name} en detalle` },
+  { id: 'b', label: `${b.name} en detalle` },
+  { id: 'veredicto', label: 'Veredicto' },
+  { id: 'faq', label: 'Preguntas frecuentes' },
+];
+const sources = [
+  { label: 'IRS — El EIN es gratuito (Formulario SS-4)', href: 'https://www.irs.gov/es/forms-pubs/about-form-ss-4' },
+  { label: 'IRS — Formulario 5472 (dueños extranjeros)', href: 'https://www.irs.gov/forms-pubs/about-form-5472' },
+];
+const schemas = [
+  articleSchema({ ...meta, canonical }),
+  breadcrumbSchema([
+    { name: 'Inicio', url: SITE.url },
+    { name: 'Comparativas', url: `${SITE.url}/comparativas` },
+    { name: `${a.name} vs ${b.name}`, url: canonical },
+  ]),
+  faqSchema(faqs),
+];
+const rows = [
+  ['Precio', a.priceLabel, b.priceLabel],
+  ['Valoración', a.rating, b.rating],
+  ['Soporte en español', a.espanol, b.espanol],
+  ['EIN', a.ein, b.ein],
+  ['Banca', a.banca, b.banca],
+  ['Impuestos (5472)', a.impuestos, b.impuestos],
+];
+---
+<BaseLayout title={meta.title} description={meta.description} type="article" publishedTime={meta.published} modifiedTime={meta.published} jsonld={schemas}>
+  <Header />
+  <main id="contenido">
+    <ArticleShell title={`${a.name} vs ${b.name}`} category="Comparativas" readTime="8 min de lectura" updated={meta.updated} toc={toc} sources={sources}>
+      <p>{m.angle} Comparamos <strong>{a.name}</strong> y <strong>{b.name}</strong> con criterio editorial independiente. Las comisiones de afiliado <strong>no</strong> alteran esta evaluación (ver <a href="/divulgacion">divulgación</a>).</p>
+
+      <h2 id="tabla">{a.name} vs {b.name}: comparativa lado a lado</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <thead><tr><th>Criterio</th><th>{a.name}</th><th>{b.name}</th></tr></thead>
+          <tbody>
+            {rows.map((r) => (<tr><th>{r[0]}</th><td>{r[1]}</td><td>{r[2]}</td></tr>))}
+          </tbody>
+        </table>
+      </div>
+
+      <AdSlot label="Publicidad Patrocinada · In-Article" height="120px" />
+
+      <h2 id="a">{a.name} en detalle</h2>
+      <p><strong>Ideal para:</strong> {a.bestFor}</p>
+      <h3>A favor</h3>
+      <ul>{a.pros.map((p) => <li>{p}</li>)}</ul>
+      <h3>En contra</h3>
+      <ul>{a.cons.map((c) => <li>{c}</li>)}</ul>
+      <p><a href={a.href} rel="sponsored nofollow noopener">Ver {a.name} →</a></p>
+
+      <h2 id="b">{b.name} en detalle</h2>
+      <p><strong>Ideal para:</strong> {b.bestFor}</p>
+      <h3>A favor</h3>
+      <ul>{b.pros.map((p) => <li>{p}</li>)}</ul>
+      <h3>En contra</h3>
+      <ul>{b.cons.map((c) => <li>{c}</li>)}</ul>
+      <p><a href={b.href} rel="sponsored nofollow noopener">Ver {b.name} →</a></p>
+
+      <h2 id="veredicto">Veredicto</h2>
+      <div class="callout callout--tip">
+        <span class="callout__icon" aria-hidden="true">◆</span>
+        <p>Si querés que te resuelvan formación, EIN, banca e impuestos en un solo lugar y con soporte en español, <strong>{a.name}</strong> suele valer su precio. Si tu prioridad es el menor costo de entrada y te animás a gestionar EIN, banca y el <a href="/impuestos/formulario-5472">Formulario 5472</a> por tu cuenta, <strong>{b.name}</strong> puede convenirte más.</p>
+      </div>
+      <p>Antes de contratar, revisá también <a href="/#comparador">el comparador general de servicios</a> y nuestra <a href="/guias/formar-llc-no-residente">guía para formar tu LLC</a>.</p>
+
+      <FaqInline faqs={faqs} heading={`Preguntas frecuentes: ${a.name} vs ${b.name}`} />
+    </ArticleShell>
+  </main>
+  <Footer />
+</BaseLayout>

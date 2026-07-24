@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CategoryHub from '../../components/CategoryHub.astro';
+import { SITE } from '../../data/site.js';
+import { breadcrumbSchema } from '../../data/seo.js';
+
+const meta = {
+  title: 'Cuentas bancarias en EE. UU. para tu LLC de no residente (2026)',
+  description: 'Cómo abrir una cuenta bancaria de negocio en Estados Unidos sin viajar: comparativa de Mercury, Relay, Wise y Payoneer, requisitos y pasos para no residentes.',
+};
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const cards = [
+  { href: '/banca/cuentas-no-residentes', tag: 'Comparativa', title: 'Mejores cuentas para no residentes', desc: 'Mercury, Relay, Wise y Payoneer comparadas: cuál conviene según tu negocio, requisitos y cómo abrir de forma remota.' },
+];
+---
+<BaseLayout title={meta.title} description={meta.description} jsonld={[breadcrumbSchema([{ name: 'Inicio', url: SITE.url }, { name: 'Cuentas Bancarias', url: canonical }])]}>
+  <Header />
+  <main id="contenido">
+    <CategoryHub
+      eyebrow="Cuentas Bancarias"
+      title="Banca de negocio en EE. UU., sin viajar"
+      lead="Con tu LLC y tu EIN listos, el siguiente paso es la cuenta bancaria. Te mostramos las plataformas que permiten apertura remota para no residentes y cómo elegir la adecuada."
+      crumb="Cuentas Bancarias"
+      cards={cards}
+    >
+      <p style="max-width:720px;margin:32px 0 0;font-size:16px;line-height:1.7;color:var(--text-2)">
+        ¿Todavía no tenés el EIN? Empezá por la <a href="/impuestos/ein-sin-ssn">guía para sacar el EIN sin SSN</a>,
+        que es requisito previo para casi todas las cuentas.
+      </p>
+    </CategoryHub>
+  </main>
+  <Footer />
+</BaseLayout>

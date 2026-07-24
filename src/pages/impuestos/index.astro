@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CategoryHub from '../../components/CategoryHub.astro';
+import { SITE } from '../../data/site.js';
+import { breadcrumbSchema } from '../../data/seo.js';
+
+const meta = {
+  title: 'EIN, ITIN e impuestos de tu LLC en EE. UU. (guías 2026)',
+  description: 'Todo lo que un no residente necesita sobre impuestos de su LLC: sacar el EIN sin SSN, cuándo pedir el ITIN y el Formulario 5472 obligatorio (multa de $25,000).',
+};
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const cards = [
+  { href: '/impuestos/ein-sin-ssn', tag: 'EIN', title: 'Cómo sacar el EIN sin SSN', desc: 'El paso a paso del Formulario SS-4 para obtener el número federal de tu empresa siendo no residente. Gratis.' },
+  { href: '/impuestos/itin', tag: 'ITIN', title: 'Cómo solicitar el ITIN (W-7)', desc: 'Qué es, cuándo lo necesitás de verdad y cómo pedirlo con un CAA sin arriesgar tu pasaporte.' },
+  { href: '/impuestos/formulario-5472', tag: 'Obligatorio', title: 'Formulario 5472 (multa $25,000)', desc: 'La declaración anual que casi nadie explica en español y que evita la multa más cara para no residentes.' },
+];
+---
+<BaseLayout title={meta.title} description={meta.description} jsonld={[breadcrumbSchema([{ name: 'Inicio', url: SITE.url }, { name: 'EIN, ITIN & Impuestos', url: canonical }])]}>
+  <Header />
+  <main id="contenido">
+    <CategoryHub
+      eyebrow="EIN, ITIN & Impuestos"
+      title="Impuestos de tu LLC, explicados sin humo"
+      lead="El área donde más gente se equivoca. Acá tenés las guías esenciales para cumplir con el IRS como no residente: obtener el EIN, entender el ITIN y —lo más importante— presentar el Formulario 5472 a tiempo."
+      crumb="EIN, ITIN & Impuestos"
+      cards={cards}
+    />
+  </main>
+  <Footer />
+</BaseLayout>

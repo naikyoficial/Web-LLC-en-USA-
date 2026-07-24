@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleShell from '../../components/ArticleShell.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import FaqInline from '../../components/FaqInline.astro';
+import { SITE } from '../../data/site.js';
+import { articleSchema, breadcrumbSchema, faqSchema } from '../../data/seo.js';
+
+const meta = {
+  title: 'Cómo solicitar el ITIN siendo no residente (Formulario W-7, 2026)',
+  description: 'Qué es el ITIN, cuándo lo necesitás de verdad, cómo llenar el Formulario W-7, el rol del CAA y los documentos requeridos. Guía en español para dueños de LLC no residentes.',
+  updated: 'julio 2026', published: '2026-07-01',
+};
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+
+const faqs = [
+  { q: '¿Necesito un ITIN para mi LLC?', a: 'No siempre. Para formar la LLC y sacar el EIN no necesitás ITIN. Solo lo necesitás cuando tenés que presentar una declaración de impuestos personal en EE. UU. o reclamar beneficios de un tratado fiscal. Muchos no residentes nunca lo necesitan.' },
+  { q: '¿Cuál es la diferencia entre ITIN y EIN?', a: 'El EIN identifica a tu empresa; el ITIN te identifica a vos como individuo ante el IRS cuando no tenés SSN. Son trámites y números distintos.' },
+  { q: '¿Cómo solicito el ITIN?', a: 'Con el Formulario W-7, acompañado de una declaración de impuestos válida (salvo excepciones) y prueba de identidad. Podés hacerlo por correo al IRS, en un centro TAC con cita, o —lo más recomendado— a través de un Agente Tramitador Certificado (CAA).' },
+  { q: '¿Qué es un CAA y por qué conviene?', a: 'Un Certifying Acceptance Agent (CAA) es un profesional autorizado por el IRS para verificar tu identidad y certificar tus documentos, de modo que no tengas que enviar tu pasaporte original por correo. Reduce errores y el riesgo de perder documentos.' },
+  { q: '¿Cuánto tarda el ITIN?', a: 'El IRS suele tardar de 7 a 11 semanas en emitir el ITIN, y más en temporada alta de declaraciones (enero-abril).' },
+];
+const toc = [
+  { id: 'que-es', label: 'Qué es el ITIN' },
+  { id: 'necesito', label: '¿Realmente lo necesitás?' },
+  { id: 'w7', label: 'Cómo llenar el Formulario W-7' },
+  { id: 'caa', label: 'El rol del CAA' },
+  { id: 'documentos', label: 'Documentos requeridos' },
+  { id: 'faq', label: 'Preguntas frecuentes' },
+];
+const sources = [
+  { label: 'IRS — Número ITIN (información general)', href: 'https://www.irs.gov/es/individuals/individual-taxpayer-identification-number' },
+  { label: 'IRS — Sobre el Formulario W-7', href: 'https://www.irs.gov/es/forms-pubs/about-form-w-7' },
+  { label: 'IRS — Agentes tramitadores certificados (CAA)', href: 'https://www.irs.gov/individuals/acceptance-agents-participating-in-the-itin-acceptance-agent-program' },
+];
+const schemas = [
+  articleSchema({ ...meta, canonical }),
+  breadcrumbSchema([
+    { name: 'Inicio', url: SITE.url },
+    { name: 'EIN, ITIN & Impuestos', url: `${SITE.url}/impuestos` },
+    { name: 'Solicitar el ITIN', url: canonical },
+  ]),
+  faqSchema(faqs),
+];
+---
+<BaseLayout title={meta.title} description={meta.description} type="article" publishedTime={meta.published} modifiedTime={meta.published} jsonld={schemas}>
+  <Header />
+  <main id="contenido">
+    <ArticleShell title="Cómo solicitar el ITIN siendo no residente" category="EIN, ITIN & Impuestos" readTime="10 min de lectura" updated={meta.updated} toc={toc} sources={sources}>
+      <p>
+        El <strong>ITIN</strong> genera mucha confusión entre los emprendedores no residentes. La verdad es
+        que <strong>no todos lo necesitan</strong>, y solicitarlo sin motivo solo te hace perder tiempo. En
+        esta guía te explicamos qué es, cuándo realmente hace falta, cómo se pide con el Formulario W-7 y por
+        qué conviene hacerlo con un CAA.
+      </p>
+
+      <div class="callout callout--info">
+        <span class="callout__icon" aria-hidden="true">✳</span>
+        <p><strong>Regla rápida:</strong> el ITIN es tu identificación fiscal <em>personal</em>. Si no tenés
+        que presentar una declaración de impuestos personal en EE. UU., probablemente no lo necesites para tu LLC.</p>
+      </div>
+
+      <h2 id="que-es">Qué es el ITIN</h2>
+      <p>
+        El <strong>ITIN</strong> (Individual Taxpayer Identification Number) es un número de nueve dígitos que
+        el IRS emite a personas que deben cumplir obligaciones fiscales en EE. UU. pero <strong>no reúnen los
+        requisitos para un SSN</strong>. Es exclusivamente para fines tributarios: no autoriza a trabajar, no
+        da estatus migratorio ni derecho a beneficios sociales.
+      </p>
+
+      <h2 id="necesito">¿Realmente lo necesitás?</h2>
+      <p>Como dueño de una LLC no residente, normalmente necesitás el ITIN si:</p>
+      <ul>
+        <li>Debés presentar una <strong>declaración de impuestos personal</strong> en EE. UU. (por ejemplo, un 1040-NR con ingresos de fuente estadounidense).</li>
+        <li>Querés reclamar los beneficios de un <strong>tratado fiscal</strong> entre EE. UU. y tu país.</li>
+        <li>Un banco o plataforma te lo exige específicamente para retención o reporte.</li>
+      </ul>
+      <p>
+        En cambio, <strong>no necesitás ITIN</strong> solo para formar la LLC ni para
+        <a href="/impuestos/ein-sin-ssn">sacar el EIN</a> (ahí usás «Foreign»), ni tampoco es lo que exige el
+        <a href="/impuestos/formulario-5472">Formulario 5472</a>, que va con el EIN de la empresa.
+      </p>
+
+      <AdSlot label="Publicidad Patrocinada · In-Article" height="120px" />
+
+      <h2 id="w7">Cómo llenar el Formulario W-7</h2>
+      <p>El ITIN se solicita con el <strong>Formulario W-7</strong>. Puntos clave:</p>
+      <ul>
+        <li><strong>Motivo de la solicitud:</strong> marcás la casilla que corresponde (por ejemplo, «non-resident alien required to file a U.S. tax return»).</li>
+        <li><strong>Datos personales:</strong> nombre, país de ciudadanía, dirección extranjera y número de documento.</li>
+        <li><strong>Declaración adjunta:</strong> por lo general debés adjuntar la declaración de impuestos que motiva el ITIN, salvo que apliques a una excepción.</li>
+      </ul>
+
+      <h2 id="caa">El rol del CAA (Agente Tramitador Certificado)</h2>
+      <p>
+        Enviar tu <strong>pasaporte original</strong> por correo al IRS es arriesgado y lento. Un
+        <strong>CAA</strong> (Certifying Acceptance Agent) está autorizado por el IRS para verificar tu
+        identidad y <strong>certificar copias de tus documentos</strong>, de forma que conservás tus
+        originales. Trabajar con un CAA reduce errores de forma y suele acelerar el proceso. Es la vía más
+        recomendada para no residentes.
+      </p>
+
+      <h2 id="documentos">Documentos requeridos</h2>
+      <p>
+        El documento estrella es el <strong>pasaporte vigente</strong>, que por sí solo prueba identidad y
+        extranjería. Si no lo usás, el IRS acepta combinaciones de otros documentos (identificación nacional,
+        licencia de conducir, acta de nacimiento, etc.). Con un CAA, presentás los originales una vez y él
+        certifica las copias.
+      </p>
+
+      <FaqInline faqs={faqs} heading="Preguntas frecuentes sobre el ITIN" />
+    </ArticleShell>
+  </main>
+  <Footer />
+</BaseLayout>

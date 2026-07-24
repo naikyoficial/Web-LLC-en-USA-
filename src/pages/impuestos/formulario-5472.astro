@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleShell from '../../components/ArticleShell.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import FaqInline from '../../components/FaqInline.astro';
+import { SITE } from '../../data/site.js';
+import { articleSchema, breadcrumbSchema, faqSchema } from '../../data/seo.js';
+
+const meta = {
+  title: 'Formulario 5472 para LLC de dueño extranjero: guía 2026 (multa $25,000)',
+  description: 'Qué es el Formulario 5472, quién debe presentarlo, cómo se hace junto al 1120 pro-forma, fechas límite y cómo evitar la multa de $25,000 del IRS. Guía en español para no residentes.',
+  updated: 'julio 2026', published: '2026-07-01',
+};
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+
+const faqs = [
+  { q: '¿Quién debe presentar el Formulario 5472?', a: 'Toda LLC de un solo miembro con dueño extranjero (non-resident alien) tratada como «disregarded entity» que haya tenido operaciones reportables con partes relacionadas durante el año: aportes de capital, retiros, pagos, préstamos, etc. En la práctica, casi todas las LLC unipersonales de no residentes deben presentarlo.' },
+  { q: '¿Cuánto es la multa por no presentar el 5472?', a: 'La sanción es de $25,000 por formulario no presentado o presentado tarde o incompleto, y puede aumentar si el IRS envía un aviso y no se corrige. Es una multa automática, no discrecional.' },
+  { q: '¿El 5472 significa que pago impuestos?', a: 'No necesariamente. El 5472 es una declaración informativa: reporta las operaciones con partes relacionadas, no calcula un impuesto. Muchas LLC de no residentes sin ingresos de fuente estadounidense no pagan impuesto federal, pero igual deben presentar el 5472.' },
+  { q: '¿Cómo se presenta el Formulario 5472?', a: 'No se presenta solo: se adjunta a un Formulario 1120 «pro-forma» (con los datos identificativos completos) y se envía por fax o correo al IRS. No se puede presentar de forma totalmente electrónica en la mayoría de los casos de LLC extranjera.' },
+  { q: '¿Cuál es la fecha límite del 5472?', a: 'Generalmente el 15 de abril del año siguiente (mismo plazo que el 1120), con posibilidad de extensión hasta el 15 de octubre presentando el Formulario 7004 a tiempo.' },
+];
+const toc = [
+  { id: 'que-es', label: 'Qué es el Formulario 5472' },
+  { id: 'quien', label: 'Quién debe presentarlo' },
+  { id: 'operaciones', label: 'Qué operaciones se reportan' },
+  { id: 'como', label: 'Cómo se presenta (con el 1120)' },
+  { id: 'fechas', label: 'Fechas límite y extensiones' },
+  { id: 'multa', label: 'La multa de $25,000' },
+  { id: 'faq', label: 'Preguntas frecuentes' },
+];
+const sources = [
+  { label: 'IRS — Sobre el Formulario 5472', href: 'https://www.irs.gov/forms-pubs/about-form-5472' },
+  { label: 'IRS — Instrucciones del Formulario 5472', href: 'https://www.irs.gov/instructions/i5472' },
+  { label: 'IRS — Sobre el Formulario 1120', href: 'https://www.irs.gov/forms-pubs/about-form-1120' },
+];
+const schemas = [
+  articleSchema({ ...meta, canonical }),
+  breadcrumbSchema([
+    { name: 'Inicio', url: SITE.url },
+    { name: 'EIN, ITIN & Impuestos', url: `${SITE.url}/impuestos` },
+    { name: 'Formulario 5472', url: canonical },
+  ]),
+  faqSchema(faqs),
+];
+---
+<BaseLayout title={meta.title} description={meta.description} type="article" publishedTime={meta.published} modifiedTime={meta.published} jsonld={schemas}>
+  <Header />
+  <main id="contenido">
+    <ArticleShell title="Formulario 5472: la declaración que evita una multa de $25,000" category="EIN, ITIN & Impuestos" readTime="13 min de lectura" updated={meta.updated} toc={toc} sources={sources}>
+      <p>
+        Si tenés una <strong>LLC en EE. UU. como no residente</strong>, este es probablemente el trámite más
+        importante —y el más ignorado— de todos. El <strong>Formulario 5472</strong> es obligatorio para la
+        mayoría de las LLC unipersonales de dueños extranjeros, y no presentarlo tiene una <strong>multa
+        automática de $25,000</strong>. Casi ningún portal en español lo explica en detalle; acá lo hacemos.
+      </p>
+
+      <div class="callout callout--warn">
+        <span class="callout__icon" aria-hidden="true">⚠</span>
+        <p><strong>Lo esencial:</strong> si sos dueño extranjero de una LLC de un solo miembro y tuviste
+        cualquier movimiento de dinero con tu empresa (aportes, retiros, pagos), debés presentar el 5472 +
+        un 1120 pro-forma cada año, aunque no pagues ni un dólar de impuesto.</p>
+      </div>
+
+      <h2 id="que-es">Qué es el Formulario 5472</h2>
+      <p>
+        El 5472 es una <strong>declaración informativa</strong> que el IRS usa para vigilar las operaciones
+        entre una empresa estadounidense y sus «partes relacionadas» extranjeras (por ejemplo, vos como
+        dueño no residente). Desde 2017, las <strong>LLC de un solo miembro propiedad de extranjeros</strong>,
+        aunque fiscalmente sean «disregarded entities» (transparentes), quedaron obligadas a presentarlo.
+      </p>
+      <p>Es <em>informativo</em>: no calcula un impuesto. Su función es de transparencia y control.</p>
+
+      <h2 id="quien">Quién debe presentarlo</h2>
+      <p>Debés presentar el 5472 si se cumplen estas tres condiciones:</p>
+      <ul>
+        <li>Tenés una <strong>LLC de un solo miembro</strong> (single-member LLC) en EE. UU.</li>
+        <li>El dueño (directo o indirecto) es una <strong>persona o entidad extranjera</strong>.</li>
+        <li>Durante el año hubo al menos una <strong>«operación reportable»</strong> con una parte relacionada.</li>
+      </ul>
+      <div class="callout callout--info">
+        <span class="callout__icon" aria-hidden="true">✳</span>
+        <p>El punto clave que sorprende a muchos: <strong>aportar tu propio dinero para abrir la LLC ya es una
+        operación reportable</strong>. Por eso, en la práctica, prácticamente toda LLC unipersonal de no
+        residente debe presentar el 5472 desde su primer año.</p>
+      </div>
+
+      <AdSlot label="Publicidad Patrocinada · In-Article" height="120px" />
+
+      <h2 id="operaciones">Qué operaciones se reportan</h2>
+      <p>Entre las «reportable transactions» más comunes para un no residente están:</p>
+      <ul>
+        <li>Aportes de capital que hacés a tu LLC.</li>
+        <li>Retiros o distribuciones que te hacés a vos mismo.</li>
+        <li>Préstamos entre vos y la empresa (en cualquier dirección).</li>
+        <li>Pagos por servicios, comisiones, alquileres o regalías entre partes relacionadas.</li>
+      </ul>
+
+      <h2 id="como">Cómo se presenta: el 5472 va con un 1120 pro-forma</h2>
+      <p>
+        El 5472 <strong>no se presenta solo</strong>. Se adjunta a un <strong>Formulario 1120</strong> usado
+        como «pro-forma»: es decir, no completás toda la declaración corporativa, solo los datos de
+        identificación de la empresa en la parte superior, y adjuntás el 5472 con el detalle de las
+        operaciones. El paquete se envía al IRS <strong>por fax o correo</strong> a la dirección específica
+        para formularios 5472; en la mayoría de casos de LLC extranjera no hay presentación 100% electrónica.
+      </p>
+      <ol>
+        <li>Asegurate de tener el <a href="/impuestos/ein-sin-ssn">EIN de tu LLC</a>.</li>
+        <li>Completá el 1120 pro-forma (encabezado con nombre, EIN y dirección).</li>
+        <li>Completá el 5472 con las operaciones reportables del año.</li>
+        <li>Enviá ambos juntos por fax o correo a la dirección/fax que indican las instrucciones del IRS.</li>
+      </ol>
+
+      <h2 id="fechas">Fechas límite y extensiones</h2>
+      <p>
+        El plazo general es el <strong>15 de abril</strong> del año siguiente al ejercicio fiscal. Podés pedir
+        una extensión de seis meses (hasta el <strong>15 de octubre</strong>) presentando el
+        <strong>Formulario 7004</strong> antes del vencimiento original. La extensión es para presentar, no
+        para pagar (si hubiera algo a pagar, que normalmente no es el caso en el 5472 informativo).
+      </p>
+
+      <h2 id="multa">La multa de $25,000 (y cómo evitarla)</h2>
+      <div class="callout callout--warn">
+        <span class="callout__icon" aria-hidden="true">⚠</span>
+        <p>No presentar el 5472 —o presentarlo tarde, incompleto o con errores sustanciales— genera una
+        <strong>penalidad de $25,000</strong> por formulario. Si el IRS notifica y no se corrige en el plazo,
+        pueden aplicarse $25,000 adicionales.</p>
+      </div>
+      <p>Para evitarla:</p>
+      <ul>
+        <li>Marcá la fecha límite del 15 de abril en tu calendario desde el primer año.</li>
+        <li>Llevá un registro simple de todos los movimientos de dinero entre vos y la LLC.</li>
+        <li>Si no te sentís seguro, contratá un contador con experiencia en LLC de no residentes al menos el primer año.</li>
+        <li>No confundas «no pago impuestos» con «no declaro»: son cosas distintas.</li>
+      </ul>
+
+      <p>
+        ¿Recién empezás? Antes del 5472 necesitás la LLC y el EIN. Mirá nuestra
+        <a href="/guias/formar-llc-no-residente">guía para formar tu LLC como no residente</a> y cómo
+        <a href="/impuestos/ein-sin-ssn">sacar el EIN sin SSN</a>.
+      </p>
+
+      <FaqInline faqs={faqs} heading="Preguntas frecuentes sobre el Formulario 5472" />
+    </ArticleShell>
+  </main>
+  <Footer />
+</BaseLayout>

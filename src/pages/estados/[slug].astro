@@ -1,0 +1,188 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleShell from '../../components/ArticleShell.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import FaqInline from '../../components/FaqInline.astro';
+import { SITE } from '../../data/site.js';
+import { STATES_DATA, STATE_SLUGS, statesArray, firstYearCost, costTier, money } from '../../data/states.js';
+
+export function getStaticPaths() {
+  return STATE_SLUGS.map((slug) => ({ params: { slug }, props: { slug } }));
+}
+
+const { slug } = Astro.props;
+const s = STATES_DATA[slug];
+
+// ---- Derivar narrativa y pros/cons a partir de los datos (contenido único) ----
+const tier = costTier(s);
+const total = firstYearCost(s);
+
+const pros = [];
+const cons = [];
+if (s.filing <= 60) pros.push(`Tarifa de registro baja (${money(s.filing)}), de las más económicas del país.`);
+if (s.annualFreq === 'ninguno') pros.push('No exige reporte anual: menos mantenimiento y menos gastos recurrentes.');
+else if (s.annual === 0) pros.push('El reporte anual es obligatorio pero gratuito.');
+else if (s.annual <= 60) pros.push(`Costo anual bajo (${money(s.annual)} al año).`);
+if (!s.incomeTax) pros.push('No cobra impuesto estatal sobre la renta personal.');
+if (s.privacy === 'alta') pros.push('Alta privacidad: el nombre del propietario no queda expuesto en el registro público.');
+if (s.annualFreq === 'bienal') pros.push('El reporte se presenta cada dos años, no cada año.');
+
+if (s.filing >= 200) cons.push(`Tarifa de registro alta (${money(s.filing)}).`);
+if (s.annual >= 200) cons.push(`Costo anual elevado (${money(s.annual)} al año).`);
+if (s.incomeTax) cons.push('Cobra impuesto estatal sobre la renta (relevante si generás ingresos con nexo en el estado).');
+if (s.privacy === 'baja') cons.push('Baja privacidad: los datos del propietario quedan en un registro público consultable.');
+if (s.publication) cons.push('Exige publicación en periódicos, un trámite extra que encarece la formación.');
+if (s.franchise) cons.push(`Franchise tax: ${s.franchise}.`);
+if (pros.length === 0) pros.push('Proceso de registro estándar y 100% remoto para no residentes.');
+if (cons.length === 0) cons.push('Sin desventajas destacables frente a la media de los estados.');
+
+// Veredicto para no residentes
+let verdict;
+if (s.score >= 5) verdict = `${s.name} es una de las mejores opciones del país para un no residente con negocio digital. Combina bajo costo, mantenimiento mínimo y privacidad, sin exigir presencia física.`;
+else if (s.score === 4) verdict = `${s.name} es una opción muy sólida para no residentes, especialmente si valorás ${!s.incomeTax ? 'la ausencia de impuesto a la renta' : 'su ecosistema de negocios'}. Conviene revisar el costo anual antes de decidir.`;
+else if (s.score === 3) verdict = `${s.name} es una opción razonable, sobre todo si tenés un motivo concreto para registrarte allí (clientes, presencia o residencia). Para un negocio 100% online, suele haber estados más baratos.`;
+else if (s.score === 2) verdict = `${s.name} rara vez es la mejor elección para un no residente sin vínculos con el estado: su costo o su carga administrativa lo hacen menos atractivo que alternativas como Wyoming o Nuevo México.`;
+else verdict = `Para un no residente sin operaciones físicas en ${s.name}, este estado no suele convenir por su alto costo o sus requisitos especiales. Considerá Wyoming o Nuevo México salvo que tengas una razón de peso.`;
+
+// Precalculado (evita operadores < > dentro del JSX, que confunden al compilador)
+const calloutClass = s.score >= 4 ? 'callout--info' : (s.score <= 2 ? 'callout--warn' : 'callout--tip');
+const calloutIcon = s.score >= 4 ? '✓' : (s.score <= 2 ? '⚠' : '◆');
+
+// Alternativas recomendadas (excluye el estado actual)
+const alternatives = statesArray()
+  .filter((x) => x.slug !== slug)
+  .sort((a, b) => b.score - a.score || firstYearCost(a) - firstYearCost(b))
+  .slice(0, 3);
+
+// ---- SEO ----
+const meta = {
+  title: `Abrir una LLC en ${s.name} (2026): costos, pasos y requisitos`,
+  description: `Guía 2026 para formar una LLC en ${s.name} como no residente: tarifa de registro ${money(s.filing)}, ${s.annualFreq === 'ninguno' ? 'sin reporte anual' : `reporte anual ${money(s.annual)}`}, privacidad, impuestos y paso a paso.`,
+  updated: 'julio 2026',
+  published: '2026-07-01',
+};
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+
+const faqs = [
+  { q: `¿Cuánto cuesta abrir una LLC en ${s.name}?`, a: `La tarifa estatal de registro es de ${money(s.filing)} (pago único). ${s.annualFreq === 'ninguno' ? `${s.name} no cobra reporte anual.` : `El costo recurrente ${s.annualFreq} es de ${money(s.annual)} (${s.annualLabel}).`} Sumá el agente registrado (~$100-$150/año) y la preparación de impuestos.` },
+  { q: `¿Puedo abrir una LLC en ${s.name} si no soy residente ni tengo SSN?`, a: `Sí. No necesitás ser residente ni tener SSN para formar una LLC en ${s.name}. Todo el trámite puede hacerse de forma remota, y podés solicitar el EIN al IRS con el Formulario SS-4 usando tu pasaporte.` },
+  { q: `¿${s.name} cobra impuesto estatal sobre la renta?`, a: s.incomeTax ? `Sí, ${s.name} tiene impuesto estatal sobre la renta. Como no residente sin nexo fiscal en el estado, su impacto suele ser limitado, pero confirmalo con un contador según tu caso.` : `No. ${s.name} no cobra impuesto estatal sobre la renta personal, una ventaja para muchos emprendedores.` },
+  { q: `¿Necesito un agente registrado en ${s.name}?`, a: `Sí. Como todo estado, ${s.name} exige un agente registrado con dirección física en el estado para recibir la correspondencia legal de tu LLC. Como no residente, contratás este servicio.` },
+];
+
+const toc = [
+  { id: 'resumen', label: `Resumen de costos en ${s.name}` },
+  { id: 'pros-cons', label: 'Ventajas y desventajas' },
+  { id: 'veredicto', label: `¿Te conviene ${s.name}?` },
+  { id: 'pasos', label: 'Cómo formar tu LLC paso a paso' },
+  { id: 'alternativas', label: 'Estados alternativos' },
+  { id: 'faq', label: 'Preguntas frecuentes' },
+];
+
+const sources = [
+  { label: `${s.sosName} (oficina oficial de registro)`, href: s.sos },
+  { label: 'IRS — Formulario SS-4 (solicitud de EIN)', href: 'https://www.irs.gov/es/forms-pubs/about-form-ss-4' },
+  { label: 'IRS — Formulario 5472 (dueños extranjeros)', href: 'https://www.irs.gov/forms-pubs/about-form-5472' },
+];
+
+const articleSchema = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: meta.title, description: meta.description,
+  inLanguage: 'es', datePublished: meta.published, dateModified: meta.published,
+  author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  publisher: { '@type': 'Organization', name: SITE.name, logo: { '@type': 'ImageObject', url: `${SITE.url}/favicon.svg` } },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+};
+const breadcrumbSchema = {
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Crear LLC por Estado', item: `${SITE.url}/estados` },
+    { '@type': 'ListItem', position: 3, name: `LLC en ${s.name}`, item: canonical },
+  ],
+};
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<BaseLayout title={meta.title} description={meta.description} type="article" publishedTime={meta.published} modifiedTime={meta.published} jsonld={[articleSchema, breadcrumbSchema, faqSchema]}>
+  <Header />
+  <main id="contenido">
+    <ArticleShell
+      title={`Abrir una LLC en ${s.name}`}
+      category="Crear LLC por Estado"
+      readTime="8 min de lectura"
+      updated={meta.updated}
+      toc={toc}
+      sources={sources}
+    >
+      <p>
+        ¿Estás evaluando formar tu <strong>LLC en {s.name}</strong> como no residente? En esta guía
+        encontrarás los costos reales actualizados a 2026, las ventajas y desventajas concretas de este
+        estado, un veredicto honesto sobre si te conviene y el paso a paso para registrarla de forma 100%
+        remota. {s.note ? s.note : ''}
+      </p>
+
+      <h2 id="resumen">Resumen de costos en {s.name}</h2>
+      <div class="art-table-wrap">
+        <table class="art-table">
+          <tbody>
+            <tr><th>Tarifa de registro (una vez)</th><td>{money(s.filing)}</td></tr>
+            <tr><th>Reporte {s.annualFreq !== 'ninguno' ? s.annualFreq : 'anual'}</th><td>{s.annualFreq === 'ninguno' ? 'No aplica' : `${money(s.annual)} — ${s.annualLabel}`}</td></tr>
+            <tr><th>Impuesto estatal a la renta</th><td>{s.incomeTax ? 'Sí' : 'No'}</td></tr>
+            <tr><th>Franchise tax</th><td>{s.franchise ? s.franchise : 'No aplica'}</td></tr>
+            <tr><th>Privacidad del propietario</th><td style="text-transform:capitalize">{s.privacy}</td></tr>
+            <tr><th>¿Exige publicación?</th><td>{s.publication ? 'Sí' : 'No'}</td></tr>
+            <tr><th>Tiempo de procesamiento</th><td>{s.processing}</td></tr>
+            <tr><th>Costo estimado primer año*</th><td><strong>{money(total)}</strong> + agente registrado</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:14px;color:var(--text-3)">*Suma registro + primer reporte. No incluye el agente registrado (~$100-$150/año) ni honorarios de contador. Nivel de costo anual: <strong>{tier}</strong>.</p>
+
+      <AdSlot label="Publicidad Patrocinada · In-Article" height="120px" />
+
+      <h2 id="pros-cons">Ventajas y desventajas de {s.name}</h2>
+      <h3>Ventajas</h3>
+      <ul>{pros.map((p) => <li>{p}</li>)}</ul>
+      <h3>Desventajas</h3>
+      <ul>{cons.map((c) => <li>{c}</li>)}</ul>
+
+      <h2 id="veredicto">¿Te conviene {s.name}?</h2>
+      <div class={`callout ${calloutClass}`}>
+        <span class="callout__icon" aria-hidden="true">{calloutIcon}</span>
+        <p>{verdict}</p>
+      </div>
+      <p>
+        Recordá que el «mejor estado» depende de tu caso: si operás físicamente en {s.name}, si tenés
+        clientes allí o si buscás inversión, la ecuación cambia. Usá nuestra
+        <a href="/estados">tabla comparativa de los 50 estados</a> o hacé el
+        <a href="/#quiz">diagnóstico en 3 pasos</a> para una recomendación personalizada.
+      </p>
+
+      <h2 id="pasos">Cómo formar tu LLC en {s.name} paso a paso</h2>
+      <ol>
+        <li><strong>Elegí el nombre</strong> de tu LLC y verificá su disponibilidad en el registro de {s.sosName}.</li>
+        <li><strong>Contratá un agente registrado</strong> con dirección física en {s.name} (~$100-$150/año).</li>
+        <li><strong>Presentá los Articles of Organization</strong> ante {s.sosName} y pagá la tarifa de {money(s.filing)}.</li>
+        {s.publication && <li><strong>Cumplí el requisito de publicación</strong> en los periódicos designados (paso obligatorio en {s.name}).</li>}
+        <li><strong>Solicitá el EIN</strong> al IRS con el <a href="/impuestos/ein-sin-ssn">Formulario SS-4, incluso sin SSN</a>.</li>
+        <li><strong>Abrí una cuenta bancaria</strong> de negocio (<a href="/banca">Mercury, Relay u otras opciones remotas</a>).</li>
+        <li><strong>Cumplí con tus impuestos:</strong> si sos dueño extranjero de una LLC de un solo miembro, presentá el <a href="/impuestos/formulario-5472">Formulario 5472 + 1120 pro-forma</a> cada año.</li>
+      </ol>
+
+      <h2 id="alternativas">Estados alternativos a considerar</h2>
+      <p>Si {s.name} no termina de convencerte, estos son los estados mejor puntuados para no residentes:</p>
+      <ul>
+        {alternatives.map((alt) => (
+          <li><a href={`/estados/${alt.slug}`}>LLC en {alt.name}</a> — registro {money(alt.filing)}, {alt.annualFreq === 'ninguno' ? 'sin reporte anual' : `anual ${money(alt.annual)}`}.</li>
+        ))}
+      </ul>
+
+      <FaqInline faqs={faqs} heading={`Preguntas frecuentes sobre la LLC en ${s.name}`} />
+    </ArticleShell>
+  </main>
+  <Footer />
+</BaseLayout>

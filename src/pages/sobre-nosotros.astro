@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StaticPage from '../components/StaticPage.astro';
+import { SITE } from '../data/site.js';
+import { breadcrumbSchema } from '../data/seo.js';
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const meta = { title: 'Sobre nosotros', description: 'Qué es EmprendeUS, por qué somos un portal independiente y cómo nos financiamos con total transparencia.' };
+---
+<BaseLayout title={meta.title} description={meta.description} jsonld={[breadcrumbSchema([{ name: 'Inicio', url: SITE.url }, { name: 'Sobre nosotros', url: canonical }])]}>
+  <Header />
+  <main id="contenido">
+    <StaticPage title="Sobre nosotros" subtitle="Somos el portal en español que querríamos haber tenido cuando abrimos nuestra primera LLC.">
+      <h2>Nuestra misión</h2>
+      <p>
+        EmprendeUS nace para resolver un problema concreto: la información sobre cómo formar y mantener una
+        LLC en Estados Unidos está dispersa, desactualizada o escrita para asustarte y venderte un servicio.
+        Nosotros hacemos lo contrario: explicamos el proceso <strong>en español, con datos verificados y sin
+        humo</strong>, para que decidas con criterio propio.
+      </p>
+
+      <h2>Para quién escribimos</h2>
+      <p>
+        Nuestro foco son los <strong>emprendedores no residentes</strong> de Latinoamérica y España que
+        quieren operar en EE. UU. sin vivir allí: freelancers, negocios de e-commerce, agencias y creadores.
+        Por eso profundizamos en temas que otros esquivan, como el <a href="/impuestos/ein-sin-ssn">EIN sin SSN</a>
+        o el <a href="/impuestos/formulario-5472">Formulario 5472</a>.
+      </p>
+
+      <h2>Independencia editorial</h2>
+      <p>
+        No somos un despacho de abogados, ni contadores, ni un agente registrado, y <strong>no vendemos la
+        formación de tu LLC</strong>. Eso nos permite comparar los servicios del mercado sin conflicto de
+        interés: recomendamos lo que creemos mejor para cada caso, no lo que más nos paga.
+      </p>
+
+      <h2>Cómo nos financiamos</h2>
+      <p>
+        Con <strong>enlaces de afiliado</strong> y espacios publicitarios. Cuando contratás un servicio a
+        través de algunos de nuestros enlaces, podemos recibir una comisión <strong>sin costo adicional para
+        ti</strong>. Esas comisiones nunca alteran nuestra evaluación: lo explicamos en detalle en nuestra
+        <a href="/divulgacion">página de divulgación de afiliados</a> y seguimos una
+        <a href="/metodologia">metodología editorial pública</a>.
+      </p>
+
+      <h2>Importante</h2>
+      <p>
+        La información de EmprendeUS es educativa y no constituye asesoría legal, fiscal ni financiera.
+        Siempre recomendamos confirmar con un profesional con licencia antes de tomar decisiones.
+      </p>
+    </StaticPage>
+  </main>
+  <Footer />
+</BaseLayout>
