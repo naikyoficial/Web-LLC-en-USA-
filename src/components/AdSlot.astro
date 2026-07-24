@@ -1,12 +1,8 @@
 ---
-// Placeholder de anuncio. Reemplazá el interior por tu código de AdSense/Ad Manager
-// cuando tengas tráfico. Reservamos el alto para evitar Cumulative Layout Shift (CLS).
-const { label = 'Publicidad Patrocinada', size = '', height = '120px', maxWidth = '100%' } = Astro.props;
+// Reserva espacio para AdSense. Cuando tengas aprobación de Google, pegá aquí el script
+// de AdSense y eliminá el display:none del aside.
+const { height = '120px', maxWidth = '100%' } = Astro.props;
 ---
-<aside class="ad-slot ad-block" style={`min-height:${height};max-width:${maxWidth};`} aria-label="Publicidad">
-  <span class="ad-label" set:html={size ? `[ ${label}<br>${size} ]` : `[ ${label} ]`}></span>
+<aside class="ad-slot" style={`min-height:${height};max-width:${maxWidth};display:none;`} aria-label="Publicidad">
+  {/* Pegá aquí tu código de AdSense */}
 </aside>
-
-<style>
-  .ad-block { border-radius: 14px; width: 100%; margin: 0 auto; padding: 16px; }
-</style>
