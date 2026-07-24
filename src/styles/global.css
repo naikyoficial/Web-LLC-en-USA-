@@ -128,24 +128,8 @@ input:focus-visible {
   to { opacity: 1; transform: none; }
 }
 
-/* Placeholders de anuncios */
-.ad-slot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px dashed #c9c6bc;
-  border-radius: 8px;
-  background: repeating-linear-gradient(135deg, #f6f5f1, #f6f5f1 10px, #f1f0eb 10px, #f1f0eb 20px);
-  text-align: center;
-}
-.ad-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #9a968a;
-  line-height: 1.8;
-}
+/* Slots de AdSense — ocultos hasta tener aprobación de Google */
+.ad-slot { display: none; }
 
 .sr-only {
   position: absolute;
