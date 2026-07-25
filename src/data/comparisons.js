@@ -43,7 +43,7 @@ export const SERVICES = {
     cons: ['Menos opciones de estados que otros', 'Algunos servicios fiscales son costo aparte'],
   },
   bizee: {
-    name: 'Bizee', href: '#', rating: '4.6 / 5', priceLabel: '$0 de servicio + tarifa estatal',
+    name: 'Bizee', href: 'https://www.bizee.com/', rating: '4.6 / 5', priceLabel: '$0 de servicio + tarifa estatal',
     espanol: 'Limitado',
     ein: 'Incluido en paquetes superiores',
     banca: 'No gestiona la cuenta directamente',

@@ -144,7 +144,7 @@ export const STATE_ORDER = ['NM', 'WY', 'FL', 'TX', 'DE', 'CA'];
 export const PROVIDERS = [
   {
     name: 'Bizee',
-    href: '#',
+    href: 'https://www.bizee.com/',
     featured: false,
     stars: 5,
     starsHalf: false,
