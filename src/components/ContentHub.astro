@@ -13,7 +13,37 @@ import AdSlot from './AdSlot.astro';
       <!-- Artículo destacado -->
       <a href={FEATURED_ARTICLE.href} class="feature">
         <div class="feature__img" aria-hidden="true">
-          <span class="ph-label">{FEATURED_ARTICLE.imgLabel}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+            <rect width="800" height="240" fill="#0d2b1e"/>
+            <!-- Orbes de fondo -->
+            <circle cx="690" cy="-15" r="165" fill="#1a4a2e" opacity="0.7"/>
+            <circle cx="755" cy="235" r="125" fill="#163d25" opacity="0.5"/>
+            <circle cx="75" cy="265" r="140" fill="#0f2318" opacity="0.55"/>
+            <!-- Barra de acento izquierda -->
+            <rect x="0" y="0" width="5" height="240" fill="#22c55e" opacity="0.85"/>
+            <!-- Documento con sello -->
+            <g transform="translate(508, 30)">
+              <rect width="132" height="175" rx="12" fill="#173a25" stroke="#256038" stroke-width="1.5"/>
+              <!-- Líneas de texto simuladas -->
+              <rect x="22" y="30" width="88" height="8" rx="4" fill="#2d7a4f" opacity="0.9"/>
+              <rect x="22" y="50" width="88" height="8" rx="4" fill="#2d7a4f" opacity="0.65"/>
+              <rect x="22" y="70" width="62" height="8" rx="4" fill="#2d7a4f" opacity="0.42"/>
+              <rect x="22" y="90" width="76" height="8" rx="4" fill="#2d7a4f" opacity="0.28"/>
+              <rect x="22" y="110" width="50" height="8" rx="4" fill="#2d7a4f" opacity="0.18"/>
+              <!-- Sello circular -->
+              <circle cx="66" cy="148" r="24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-dasharray="5 2.5"/>
+              <circle cx="66" cy="148" r="17" fill="#22c55e"/>
+              <polyline points="55,148 62,157 79,136" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <!-- Estrellas decorativas -->
+            <text x="456" y="52" font-family="Arial, sans-serif" font-size="16" fill="#22c55e" opacity="0.25">★</text>
+            <text x="474" y="38" font-family="Arial, sans-serif" font-size="10" fill="#22c55e" opacity="0.18">★</text>
+            <!-- Tipografía principal -->
+            <text x="52" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="82" font-weight="700" fill="white" letter-spacing="-4">LLC</text>
+            <text x="56" y="155" font-family="Georgia, 'Times New Roman', serif" font-size="31" font-weight="400" fill="#86efac" letter-spacing="7">EN EE. UU.</text>
+            <text x="58" y="185" font-family="'Courier New', Courier, monospace" font-size="10.5" fill="#4ade80" letter-spacing="2.5" opacity="0.9">GUIA COMPLETA PARA NO RESIDENTES · 2026</text>
+            <rect x="58" y="200" width="52" height="2.5" rx="1.25" fill="#22c55e"/>
+          </svg>
         </div>
         <div class="feature__body">
           <div class="feature__meta">
@@ -29,19 +59,88 @@ import AdSlot from './AdSlot.astro';
       <AdSlot label="Publicidad Patrocinada · In-Feed Ad Unit" height="120px" />
 
       <div class="hub__cards">
-        {ARTICLES.map((a) => (
-          <a href={a.href} class="acard">
-            <div class="acard__img" aria-hidden="true"><span class="ph-label">{a.imgLabel}</span></div>
-            <div class="acard__body">
-              <div class="acard__meta">
-                <span class="tag tag--sm">{a.category}</span>
-                <span class="meta-dim">{a.readTime}</span>
-              </div>
-              <h3 class="acard__title">{a.title}</h3>
-              <p class="acard__updated">Actualizado {a.updated}</p>
+        <!-- Card 1: Formulario 5472 -->
+        <a href={ARTICLES[0].href} class="acard">
+          <div class="acard__img" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+              <rect width="400" height="150" fill="#0f172a"/>
+              <!-- Fondo -->
+              <circle cx="340" cy="-10" r="110" fill="#1e2d4a" opacity="0.8"/>
+              <circle cx="370" cy="155" r="90" fill="#162038" opacity="0.55"/>
+              <!-- Triángulo de advertencia (decorativo) -->
+              <polygon points="298,22 355,128 241,128" fill="none" stroke="#f59e0b" stroke-width="1.8" opacity="0.35"/>
+              <polygon points="298,42 335,115 261,115" fill="none" stroke="#f59e0b" stroke-width="1" opacity="0.2"/>
+              <!-- Signo de exclamación -->
+              <text x="289" y="108" font-family="Arial Black, sans-serif" font-size="54" font-weight="900" fill="#f59e0b" opacity="0.28">!</text>
+              <!-- Barra acento -->
+              <rect x="0" y="0" width="5" height="150" fill="#f59e0b" opacity="0.85"/>
+              <!-- Tipografía principal -->
+              <text x="22" y="64" font-family="Georgia, 'Times New Roman', serif" font-size="44" font-weight="700" fill="#fbbf24" letter-spacing="-1">$25,000</text>
+              <text x="22" y="90" font-family="'Courier New', Courier, monospace" font-size="9.5" fill="#94a3b8" letter-spacing="2">MULTA POR NO PRESENTAR</text>
+              <text x="22" y="118" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-weight="600" fill="white">Formulario 5472</text>
+              <rect x="22" y="130" width="38" height="2.5" rx="1.25" fill="#f59e0b"/>
+            </svg>
+          </div>
+          <div class="acard__body">
+            <div class="acard__meta">
+              <span class="tag tag--sm">{ARTICLES[0].category}</span>
+              <span class="meta-dim">{ARTICLES[0].readTime}</span>
             </div>
-          </a>
-        ))}
+            <h3 class="acard__title">{ARTICLES[0].title}</h3>
+            <p class="acard__updated">Actualizado {ARTICLES[0].updated}</p>
+          </div>
+        </a>
+
+        <!-- Card 2: Comparativa de estados -->
+        <a href={ARTICLES[1].href} class="acard">
+          <div class="acard__img" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+              <rect width="400" height="150" fill="#1a2635"/>
+              <!-- Fondo -->
+              <circle cx="345" cy="18" r="105" fill="#243547" opacity="0.7"/>
+              <circle cx="55" cy="155" r="95" fill="#152030" opacity="0.5"/>
+              <!-- Puntos decorativos tipo mapa -->
+              <circle cx="320" cy="50" r="2.2" fill="#4ade80" opacity="0.38"/>
+              <circle cx="338" cy="66" r="2.2" fill="#4ade80" opacity="0.28"/>
+              <circle cx="356" cy="50" r="2.2" fill="#4ade80" opacity="0.38"/>
+              <circle cx="374" cy="66" r="2.2" fill="#4ade80" opacity="0.28"/>
+              <circle cx="320" cy="82" r="2.2" fill="#4ade80" opacity="0.22"/>
+              <circle cx="338" cy="98" r="2.2" fill="#4ade80" opacity="0.18"/>
+              <circle cx="356" cy="82" r="2.2" fill="#4ade80" opacity="0.22"/>
+              <!-- Barra acento -->
+              <rect x="0" y="0" width="5" height="150" fill="#60a5fa" opacity="0.85"/>
+              <!-- Badges de estados -->
+              <rect x="22" y="24" width="74" height="65" rx="9" fill="#1e3248" stroke="#3b82f6" stroke-width="1.5"/>
+              <text x="59" y="66" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700" fill="white" text-anchor="middle">WY</text>
+              <text x="59" y="80" font-family="'Courier New', Courier, monospace" font-size="8" fill="#64748b" text-anchor="middle">Wyoming</text>
+
+              <text x="111" y="60" font-family="Arial, sans-serif" font-size="10" fill="#475569" font-weight="600" text-anchor="middle">vs</text>
+
+              <rect x="126" y="24" width="74" height="65" rx="9" fill="#1e3248" stroke="#3b82f6" stroke-width="1.5"/>
+              <text x="163" y="66" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700" fill="white" text-anchor="middle">FL</text>
+              <text x="163" y="80" font-family="'Courier New', Courier, monospace" font-size="8" fill="#64748b" text-anchor="middle">Florida</text>
+
+              <text x="215" y="60" font-family="Arial, sans-serif" font-size="10" fill="#475569" font-weight="600" text-anchor="middle">vs</text>
+
+              <rect x="230" y="24" width="74" height="65" rx="9" fill="#1e3248" stroke="#3b82f6" stroke-width="1.5"/>
+              <text x="267" y="66" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700" fill="white" text-anchor="middle">DE</text>
+              <text x="267" y="80" font-family="'Courier New', Courier, monospace" font-size="8" fill="#64748b" text-anchor="middle">Delaware</text>
+
+              <!-- Texto inferior -->
+              <text x="22" y="114" font-family="'Courier New', Courier, monospace" font-size="9.5" fill="#94a3b8" letter-spacing="2">COMPARATIVA DE ESTADOS · 2026</text>
+              <text x="22" y="135" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="600" fill="white">¿Donde conviene abrir tu LLC?</text>
+              <rect x="22" y="143" width="38" height="2.5" rx="1.25" fill="#60a5fa"/>
+            </svg>
+          </div>
+          <div class="acard__body">
+            <div class="acard__meta">
+              <span class="tag tag--sm">{ARTICLES[1].category}</span>
+              <span class="meta-dim">{ARTICLES[1].readTime}</span>
+            </div>
+            <h3 class="acard__title">{ARTICLES[1].title}</h3>
+            <p class="acard__updated">Actualizado {ARTICLES[1].updated}</p>
+          </div>
+        </a>
       </div>
     </div>
 
@@ -68,7 +167,6 @@ import AdSlot from './AdSlot.astro';
   .hub__head { margin-bottom: 34px; max-width: none; }
   .hub__head .section-title { margin-top: 12px; font-size: 38px; }
 
-  .ph-label { font-family: var(--font-mono); font-size: 11px; color: #a8a498; }
   .tag {
     font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
     color: var(--badge-text); background: var(--badge-bg); padding: 4px 10px; border-radius: 6px;
@@ -83,9 +181,10 @@ import AdSlot from './AdSlot.astro';
   }
   .feature:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -22px rgba(10, 25, 15, 0.18); }
   .feature__img {
-    height: 240px; display: flex; align-items: center; justify-content: center;
-    background: repeating-linear-gradient(135deg, #edece6, #edece6 14px, #e7e5de 14px, #e7e5de 28px);
+    height: 240px; overflow: hidden; display: block;
+    background: #0d2b1e;
   }
+  .feature__img svg { display: block; }
   .feature__body { padding: 26px 28px 28px; }
   .feature__meta { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
   .feature__title { font-weight: 700; font-size: 27px; line-height: 1.2; margin: 0 0 10px; color: var(--text); }
@@ -98,15 +197,16 @@ import AdSlot from './AdSlot.astro';
   }
   .acard:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -22px rgba(10, 25, 15, 0.18); }
   .acard__img {
-    height: 150px; display: flex; align-items: center; justify-content: center;
-    background: repeating-linear-gradient(135deg, #edece6, #edece6 12px, #e7e5de 12px, #e7e5de 24px);
+    height: 150px; overflow: hidden; display: block;
+    background: #0f172a;
   }
+  .acard__img svg { display: block; }
   .acard__body { padding: 20px 22px 22px; }
   .acard__meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
   .acard__title { font-weight: 700; font-size: 19px; line-height: 1.25; margin: 0 0 8px; color: var(--text); }
   .acard__updated { font-size: 13px; color: var(--text-4); margin: 0; }
 
-  .hub__side { position: sticky; top: 180px; display: flex; flex-direction: column; gap: 22px; }
+  .hub__side { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 22px; }
   .newsletter { background: var(--bg-emerald); border-radius: 16px; padding: 24px; }
   .newsletter__title { font-family: var(--font-head); font-weight: 600; font-size: 19px; color: var(--on-dark); margin-bottom: 8px; }
   .newsletter__desc { font-size: 13px; line-height: 1.5; color: var(--on-dark-3); margin: 0 0 16px; }
@@ -139,7 +239,6 @@ import AdSlot from './AdSlot.astro';
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const msg = form.querySelector('[data-newsletter-msg]');
-      // TODO: conectar con tu proveedor de email (Mailchimp, ConvertKit, Beehiiv…)
       if (msg) msg.hidden = false;
       form.querySelector('input')?.setAttribute('disabled', 'true');
     });
