@@ -177,7 +177,7 @@ export const PROVIDERS = [
   },
   {
     name: 'Globalfy',
-    href: '#',
+    href: 'https://globalfy.com/?fp_ref=emprendeus',
     featured: false,
     stars: 5,
     starsHalf: false,

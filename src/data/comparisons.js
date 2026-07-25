@@ -33,7 +33,7 @@ export const SERVICES = {
     cons: ['Precio anual más alto que la competencia', 'El costo recurrente puede pesar en negocios muy pequeños'],
   },
   globalfy: {
-    name: 'Globalfy', href: '#', rating: '4.5 / 5', priceLabel: '$249/año + tarifa estatal',
+    name: 'Globalfy', href: 'https://globalfy.com/?fp_ref=emprendeus', rating: '4.5 / 5', priceLabel: '$249/año + tarifa estatal',
     espanol: 'Sí, enfocados en LATAM',
     ein: 'Incluido en paquetes',
     banca: 'Ayuda con cuenta bancaria remota',
