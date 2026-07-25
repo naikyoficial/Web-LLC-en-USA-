@@ -6,7 +6,7 @@
 export const SITE = {
   name: 'EmprendeUS',
   // Cambiá esto por tu dominio real antes de publicar.
-  url: 'https://emprendeus.com',
+  url: 'https://web-llc-en-usa.vercel.app',
   locale: 'es',
   // País/región objetivo principal para SEO (audiencia: no residentes en LATAM/España).
   description:
