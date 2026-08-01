@@ -153,6 +153,8 @@ import AdSlot from './AdSlot.astro';
         <form data-newsletter>
           <label class="sr-only" for="nl-email">Tu correo electrónico</label>
           <input id="nl-email" type="email" required placeholder="tu@correo.com" class="newsletter__input" />
+          {/* Honeypot anti-spam: los bots lo completan, los humanos no lo ven */}
+          <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;height:0;" aria-hidden="true" />
           <button type="submit" class="newsletter__btn">Suscribirme gratis</button>
           <p class="newsletter__msg" data-newsletter-msg hidden>¡Gracias! Revisá tu correo para confirmar.</p>
         </form>
@@ -238,9 +240,10 @@ import AdSlot from './AdSlot.astro';
   document.querySelectorAll('[data-newsletter]').forEach((form) => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      if (form.querySelector('[name="website"]')?.value) return; // honeypot
       const msg = form.querySelector('[data-newsletter-msg]');
       if (msg) msg.hidden = false;
-      form.querySelector('input')?.setAttribute('disabled', 'true');
+      form.querySelector('input[type="email"]')?.setAttribute('disabled', 'true');
     });
   });
 </script>

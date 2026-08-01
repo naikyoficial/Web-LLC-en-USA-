@@ -11,40 +11,81 @@ const meta = { title: 'Términos y condiciones', description: 'Términos de uso 
 <BaseLayout title={meta.title} description={meta.description} jsonld={[breadcrumbSchema([{ name: 'Inicio', url: SITE.url }, { name: 'Términos', url: canonical }])]}>
   <Header />
   <main id="contenido">
-    <StaticPage title="Términos y condiciones" subtitle="Plantilla base — adaptala con tu asesor legal antes de publicar." updated={SITE.updatedLabel}>
-      <h2>Naturaleza del contenido</h2>
+    <StaticPage title="Términos y condiciones" subtitle="Al usar EmprendeUS aceptás las condiciones descritas a continuación." updated={SITE.updatedLabel}>
+
+      <h2>1. Naturaleza del contenido</h2>
       <p>
         Todo el contenido de EmprendeUS tiene <strong>fines exclusivamente educativos e informativos</strong>.
-        No constituye asesoría legal, fiscal, contable ni financiera, y no crea una relación profesional-cliente.
-        No somos un despacho de abogados, contadores públicos ni un agente registrado.
+        No constituye asesoría legal, fiscal, contable ni financiera, y no crea una relación
+        profesional-cliente de ningún tipo. EmprendeUS no es un despacho de abogados, una firma contable
+        ni un agente registrado autorizado.
+      </p>
+      <p>
+        Antes de tomar cualquier decisión sobre la estructura legal de tu negocio, tus obligaciones
+        fiscales o tus cuentas bancarias, consultá a un profesional con licencia en la jurisdicción
+        correspondiente.
       </p>
 
-      <h2>Exactitud y actualización</h2>
+      <h2>2. Exactitud y actualización</h2>
       <p>
-        Nos esforzamos por mantener la información precisa y actualizada, pero las leyes, tarifas y reglas del
-        IRS y de los estados cambian. La información se ofrece <strong>«tal cual»</strong>, sin garantías.
-        Verificá siempre en las fuentes oficiales enlazadas antes de actuar.
+        Nos esforzamos por mantener la información precisa y actualizada, pero las leyes, tarifas y
+        reglas del IRS y de los estados de EE. UU. cambian con frecuencia. La información se ofrece
+        <strong>«tal cual»</strong> y sin garantías de exactitud, completitud o adecuación para un caso
+        concreto. Siempre verificá en las fuentes oficiales enlazadas en cada guía antes de actuar.
       </p>
 
-      <h2>Enlaces de terceros y afiliados</h2>
+      <h2>3. Limitación de responsabilidad</h2>
       <p>
-        El sitio incluye enlaces a servicios de terceros, algunos de afiliado (ver
-        <a href="/divulgacion">divulgación</a>). No controlamos ni respondemos por el contenido, los precios
-        o las prácticas de esos terceros.
+        En la máxima medida permitida por la ley aplicable, EmprendeUS, sus editores y colaboradores
+        no serán responsables por:
+      </p>
+      <ul>
+        <li>Decisiones empresariales, fiscales o legales tomadas con base en el contenido del sitio.</li>
+        <li>Pérdidas, multas o perjuicios derivados del uso o la imposibilidad de uso del sitio.</li>
+        <li>Inexactitudes o desactualizaciones en el contenido.</li>
+        <li>Contenido, precios o prácticas de los servicios de terceros enlazados.</li>
+      </ul>
+
+      <h2>4. Enlaces de terceros y afiliados</h2>
+      <p>
+        El sitio incluye enlaces a servicios de terceros, algunos de carácter afiliado (ver
+        <a href="/divulgacion">divulgación de afiliados</a>). No controlamos ni respaldamos el contenido,
+        los precios ni las prácticas de esos terceros. Revisá sus propios términos y políticas antes de
+        contratar.
       </p>
 
-      <h2>Limitación de responsabilidad</h2>
+      <h2>5. Propiedad intelectual</h2>
       <p>
-        En la máxima medida permitida por la ley, EmprendeUS no será responsable por decisiones tomadas con
-        base en el contenido del sitio. La responsabilidad de tus decisiones empresariales y fiscales es tuya
-        y de los profesionales que contrates.
+        El contenido original del sitio —textos, comparativas, gráficos y código— pertenece a EmprendeUS
+        y está protegido por las leyes de propiedad intelectual aplicables. Podés citar fragmentos con
+        atribución y enlace a la fuente original. Queda prohibida la reproducción total sin autorización.
+      </p>
+      <p>
+        Los nombres comerciales, marcas y logotipos de terceros (doola, Globalfy, Bizee, IRS, etc.)
+        pertenecen a sus respectivos propietarios y se mencionan solo con fines informativos y
+        comparativos, sin implicar afiliación ni respaldo.
       </p>
 
-      <h2>Propiedad intelectual</h2>
+      <h2>6. Modificaciones al sitio y a estos términos</h2>
       <p>
-        El contenido original del sitio pertenece a EmprendeUS. Los nombres y marcas de terceros pertenecen a
-        sus respectivos propietarios y se usan solo con fines informativos.
+        Nos reservamos el derecho de modificar, suspender o discontinuar el sitio en cualquier momento
+        sin previo aviso. También podemos actualizar estos términos; la fecha de última revisión aparece
+        al inicio de la página. El uso continuado del sitio tras una actualización implica la aceptación
+        de los nuevos términos.
       </p>
+
+      <h2>7. Ley aplicable</h2>
+      <p>
+        Estos términos se rigen por las leyes del país donde EmprendeUS tenga su sede de operación,
+        sin perjuicio de las normas de protección al consumidor que sean de aplicación obligatoria en
+        tu país de residencia.
+      </p>
+
+      <h2>8. Contacto</h2>
+      <p>
+        Para cualquier consulta sobre estos términos, escribinos por la <a href="/contacto">página de contacto</a>.
+      </p>
+
     </StaticPage>
   </main>
   <Footer />

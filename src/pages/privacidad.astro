@@ -6,37 +6,90 @@ import StaticPage from '../components/StaticPage.astro';
 import { SITE } from '../data/site.js';
 import { breadcrumbSchema } from '../data/seo.js';
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
-const meta = { title: 'Política de privacidad', description: 'Cómo EmprendeUS trata los datos de sus visitantes: analítica, cookies, publicidad y newsletter.' };
+const meta = { title: 'Política de privacidad', description: 'Cómo EmprendeUS trata los datos de sus visitantes: fuentes tipográficas, cookies de afiliados y newsletter.' };
 ---
 <BaseLayout title={meta.title} description={meta.description} noindex={false} jsonld={[breadcrumbSchema([{ name: 'Inicio', url: SITE.url }, { name: 'Política de privacidad', url: canonical }])]}>
   <Header />
   <main id="contenido">
-    <StaticPage title="Política de privacidad" subtitle="Plantilla base — adaptala con tu asesor legal antes de publicar." updated={SITE.updatedLabel}>
+    <StaticPage title="Política de privacidad" subtitle="Qué datos recopilamos, para qué y cómo podés controlarlos." updated={SITE.updatedLabel}>
+
+      <h2>1. Quién es el responsable</h2>
       <p>
-        Esta política describe cómo EmprendeUS («el sitio») trata la información de sus visitantes. Es una
-        <strong>plantilla base</strong> y debe revisarse con un profesional para cumplir con las normativas
-        aplicables (GDPR, CCPA y las de tu país) según cómo operes el sitio.
+        EmprendeUS es un portal de información independiente. Para contactarnos en relación con tus datos,
+        usá el formulario de la <a href="/contacto">página de contacto</a>.
       </p>
 
-      <h2>Datos que recopilamos</h2>
+      <h2>2. Qué datos recopilamos y por qué</h2>
+
+      <h3>2.1 Datos de navegación</h3>
+      <p>
+        Como todo servidor web, registramos automáticamente la dirección IP, el navegador, el sistema
+        operativo y las páginas visitadas cuando accedés al sitio. Estos datos se procesan de forma agregada
+        para medir el tráfico y mejorar el contenido. No se usan para identificarte personalmente.
+      </p>
+
+      <h3>2.2 Fuentes tipográficas (Google Fonts)</h3>
+      <p>
+        El sitio carga fuentes tipográficas desde los servidores de Google Fonts
+        (<code>fonts.googleapis.com</code>). Esta carga transfiere tu dirección IP a Google. Google actúa
+        como encargado del tratamiento bajo sus propias
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener nofollow">políticas de privacidad</a>.
+        Si preferís evitar esta transferencia, podés bloquear <code>fonts.googleapis.com</code> con una
+        extensión de tu navegador.
+      </p>
+
+      <h3>2.3 Newsletter</h3>
+      <p>
+        Si te suscribís al newsletter, recopilamos tu dirección de correo electrónico para enviarte
+        contenido sobre LLC, impuestos y banca en EE. UU. Podés darte de baja en cualquier momento
+        siguiendo el enlace incluido en cada correo.
+      </p>
+
+      <h3>2.4 Cookies de afiliados</h3>
+      <p>
+        Algunos enlaces del sitio son de afiliado (ver <a href="/divulgacion">divulgación de afiliados</a>).
+        Cuando hacés clic en esos enlaces, los servicios de terceros (doola, Globalfy, Bizee) pueden
+        instalar cookies de seguimiento de conversión en tu navegador bajo sus propias políticas de
+        privacidad. EmprendeUS no instala esas cookies directamente.
+      </p>
+
+      <h2>3. Publicidad</h2>
+      <p>
+        Actualmente el sitio no muestra publicidad de terceros. Cuando se active, los espacios publicitarios
+        pueden usar cookies propias de las redes publicitarias (por ejemplo, Google AdSense). Actualizaremos
+        esta política en ese momento.
+      </p>
+
+      <h2>4. Base legal del tratamiento</h2>
+      <p>
+        El tratamiento de datos de navegación se basa en el <strong>interés legítimo</strong> de operar el
+        sitio de forma segura y medir su rendimiento de forma agregada. El tratamiento del correo del
+        newsletter se basa en el <strong>consentimiento</strong> que otorgás al suscribirte.
+      </p>
+
+      <h2>5. Tus derechos (GDPR y normativas locales)</h2>
+      <p>Si sos residente del Espacio Económico Europeo o de otro territorio con normativa equivalente, tenés derecho a:</p>
       <ul>
-        <li><strong>Datos de navegación:</strong> páginas visitadas, dispositivo y datos agregados de analítica.</li>
-        <li><strong>Newsletter:</strong> si te suscribís, tu correo electrónico, para enviarte contenidos.</li>
-        <li><strong>Cookies:</strong> propias y de terceros para analítica y publicidad.</li>
+        <li><strong>Acceso:</strong> saber qué datos tenemos sobre vos.</li>
+        <li><strong>Rectificación:</strong> corregir datos inexactos.</li>
+        <li><strong>Supresión:</strong> solicitar que eliminemos tus datos.</li>
+        <li><strong>Portabilidad:</strong> recibir tus datos en formato estructurado.</li>
+        <li><strong>Oposición:</strong> oponerte al tratamiento basado en interés legítimo.</li>
       </ul>
+      <p>Para ejercer cualquiera de estos derechos, escribinos por la <a href="/contacto">página de contacto</a>. Respondemos en un plazo máximo de 30 días.</p>
 
-      <h2>Uso de la información</h2>
-      <p>Usamos estos datos para mejorar el contenido, medir la audiencia y mostrar publicidad relevante. No vendemos tus datos personales.</p>
-
-      <h2>Terceros</h2>
+      <h2>6. Retención de datos</h2>
       <p>
-        Podemos usar servicios como proveedores de analítica y redes publicitarias, que tienen sus propias
-        políticas de privacidad. Los enlaces de afiliado pueden usar cookies de seguimiento; ver nuestra
-        <a href="/divulgacion">divulgación de afiliados</a>.
+        Los datos de navegación agregados se retienen mientras sean necesarios para mejorar el sitio.
+        Los correos del newsletter se retienen hasta que canceles la suscripción.
       </p>
 
-      <h2>Tus derechos</h2>
-      <p>Podés solicitar acceso, corrección o eliminación de tus datos escribiéndonos por la <a href="/contacto">página de contacto</a>.</p>
+      <h2>7. Cambios a esta política</h2>
+      <p>
+        Podemos actualizar esta política. La fecha de última revisión aparece al inicio de la página.
+        Cambios significativos se comunicarán a los suscriptores del newsletter.
+      </p>
+
     </StaticPage>
   </main>
   <Footer />
